@@ -12,10 +12,10 @@ def get_transcript(video_id):
         A string containing the transcript of the video.
     """
     try:
-        transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+        transcript_list = YouTubeTranscriptApi().fetch(video_id)
         transcript = ""
         for item in transcript_list:
-            transcript += item['text'] + " "
+            transcript += item.text + " "
         return transcript
     except Exception as e:
         return f"Error: {e}"
