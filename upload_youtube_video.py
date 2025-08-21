@@ -41,7 +41,7 @@ def get_authenticated_service():
     
     return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
-def upload_video(youtube, video_path, title, description):
+def upload_video(youtube, video_path, title, description, thumbnail_path=None):
     body = {
         'snippet': {
             'title': title,
@@ -70,17 +70,34 @@ def upload_video(youtube, video_path, title, description):
     print(f'Video id "{response.get("id")}" was successfully uploaded.')
     print(f'Video URL: https://www.youtube.com/watch?v={response.get("id")}')
 
+    # Upload thumbnail if provided
+    if thumbnail_path:
+        video_id = response.get("id")
+        print(f'Uploading thumbnail for video ID: {video_id} from {thumbnail_path}...')
+        try:
+            thumbnail_insert_request = youtube.thumbnails().set(
+                videoId=video_id,
+                media_body=MediaFileUpload(thumbnail_path)
+            )
+            thumbnail_response = thumbnail_insert_request.execute()
+            print('Thumbnail uploaded successfully.')
+        except HttpError as e:
+            print(f'An HTTP error {e.resp.status} occurred during thumbnail upload: {e.content.decode("utf-8")}')
+        except Exception as e:
+            print(f'An error occurred during thumbnail upload: {e}')
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Upload a video to YouTube.')
     parser.add_argument('--file', required=True, help='Path to the video file.')
     parser.add_argument('--title', required=True, help='Title of the video.')
     parser.add_argument('--description', required=True, help='Description of the video.')
+    parser.add_argument('--thumbnail', help='Path to the thumbnail image file (optional).')
 
     args = parser.parse_args()
 
     try:
         youtube = get_authenticated_service()
-        upload_video(youtube, args.file, args.title, args.description)
+        upload_video(youtube, args.file, args.title, args.description, args.thumbnail)
     except HttpError as e:
         print(f'An HTTP error {e.resp.status} occurred: {e.content.decode("utf-8")}')
     except Exception as e:
