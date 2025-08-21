@@ -29,7 +29,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Start time (`start_time`)
     *   End time (`end_time`)
     *   A catchy and descriptive title (`title`)
-    *   A one-paragraph summary of the cut's content (`description`)
+    *   A two-paragraph summary of the cut's content (`description`). Always mention the name of the Video and the link to the video this cut came from.
 
 ### **Step 4: Cuts Metadata Generation**
 
