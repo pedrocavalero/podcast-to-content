@@ -6,3 +6,4 @@ requests
 openai
 python-dotenv
 markdown
+yt-dlp
