@@ -21,12 +21,42 @@ The project follows this workflow:
 5.  **Featured Image Generation:** Generates a featured image for each blog post using an AI text-to-image model.
 6.  **WordPress Publication:** Publishes the blog posts to WordPress as drafts, with their corresponding featured images.
 
+## Video Cuts Workflow
+
+This workflow automates the process of extracting valuable segments from a YouTube video, generating corresponding thumbnails, and uploading them as new videos to a YouTube channel.
+
+### Features
+
+-   **YouTube Video Download:** Downloads the full video and its subtitles.
+-   **Content Analysis & Cut Point Identification:** Analyzes the transcript to identify interesting and valuable video segments.
+-   **Cuts Metadata Generation:** Creates a markdown file with titles, descriptions, and timestamps for each cut.
+-   **Video Cutting:** Extracts the identified segments as separate video files.
+-   **AI-Powered Thumbnail Generation:** Generates unique and descriptive thumbnails for each video cut using OpenAI gpt-image-1.
+-   **Image Resizing:** Resizes generated thumbnails to YouTube's recommended dimensions (1280x720).
+-   **YouTube Upload Integration:** Uploads the video cuts along with their generated thumbnails to a YouTube channel.
+
+### Workflow
+
+The video cuts workflow follows these steps:
+
+1.  **Initialization:** Takes a YouTube video URL as input and creates a dedicated directory for assets.
+2.  **Video and Subtitle Download:** Downloads the video and its auto-generated subtitles.
+3.  **Content Analysis & Cut Point Identification:** Identifies interesting segments (cuts) within the video based on the transcript.
+4.  **Cuts Metadata Generation:** Compiles metadata (title, description, timestamps) for each identified cut into a markdown file.
+5.  **Video Cutting:** Creates individual video files for each cut.
+6.  **Thumbnail Generation and Resizing:** Generates an AI-powered image for each cut's title and resizes it to the optimal YouTube thumbnail format.
+7.  **Video Upload:** Uploads each video cut to YouTube, including its generated thumbnail.
+8.  **Completion:** Notifies the user upon successful completion of the entire process.
+
 ## Requirements
 
 - Python 3.x
+- **ffmpeg**: Required for video cutting and frame extraction. Ensure it's installed and accessible in your system's PATH.
 - A YouTube API key
 - An OpenAI API key
 - WordPress credentials (URL, username, and password)
+- **Google Cloud Project Configuration for YouTube Uploads**:
+    To enable YouTube video uploads, you need to configure a Google Cloud Project, enable the YouTube Data API v3, and create OAuth 2.0 Client ID credentials (Desktop app type). Download the `client_secret.json` file and place it in the project's root directory. Refer to the detailed steps provided during the initial setup of the `upload_youtube_video.py` script.
 
 ## Installation
 
@@ -79,6 +109,13 @@ To run the individual scripts:
 -   **Upload a post to WordPress:**
     ```bash
     python wordpress_uploader.py "<title>" <content_path> [image_path]
+    ```
+
+-   **Run the video cuts workflow:**
+    ```bash
+    # Refer to video-cuts.workflow.md for detailed steps and execution
+    # Example:
+    # source .venv/bin/activate && python your_script_to_run_workflow.py <youtube_url>
     ```
 
 ## Configuration
