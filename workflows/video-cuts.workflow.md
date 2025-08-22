@@ -67,7 +67,8 @@ This document outlines the step-by-step process for downloading a YouTube video 
 
 1.  **For each cut, generate a thumbnail with a prompt that clearly describes the desired output:**
     *   Create a variable `PROMPT` with the following content: "Generate a YouTube thumbnail for a video about software development. The thumbnail must prominently feature the text: '{title}'. The design should be eye-catching, modern, and relevant to the video's content to maximize audience engagement. The image should be interesting enough to make a developer want to click on it."
-    *   Run the command: `source .venv/bin/activate && python scripts/generate_image.py "{PROMPT}" "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" --model "gpt-image-1" --size "1792x1024"`
+    *   Run the command: `source .venv/bin/activate && python scripts/generate_image.py "{PROMPT}" "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" --model "gpt-image-1" --size "1536x1024"`
+    NOTE: Do not change the model or the size!!!!!
 2.  **Resize the generated thumbnail to YouTube's recommended size (1280x720):**
     *   Run the command: `source .venv/bin/activate && python scripts/resize_image.py "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" "cuts-{VIDEO_ID}/cut{N}_thumbnail_1280x720.png" --width 1280 --height 720`
 

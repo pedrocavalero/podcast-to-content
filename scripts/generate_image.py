@@ -27,7 +27,7 @@ def generate_image(prompt, output_path, model="gpt-image-1", size="1024x1024"):
     try:
         supported_sizes = {
             "dall-e-3": ["1024x1024", "1792x1024", "1024x1792"],
-            "gpt-image-1": ["256x256", "512x512", "1024x1024", "1536x1024"]
+            "gpt-image-1": ["1024x1024", "1024x1536", "1536x1024", "auto"]
         }
 
         if model not in supported_sizes:
