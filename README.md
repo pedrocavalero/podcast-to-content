@@ -38,21 +38,21 @@ This workflow automates the process of converting a YouTube video into a series 
 
 ### Usage
 
-The `autoblog.workflow.md` file describes the manual steps of the workflow. I can be used inside a AI Agent tool. Using Gemini CLI a prompt like: "Run the @autblog.workflow.md script" can do the trick.
+The `workflows/autoblog.workflow.md` file describes the manual steps of the workflow. It can be used inside a AI Agent tool. Using Gemini CLI a prompt like: "Run the @autblog.workflow.md script" can do the trick.
 
 To run the individual scripts:
 
 -   **Transcribe a video:**
     ```bash
-    python transcribe.py <video_id>
+    python scripts/transcribe.py <video_id>
     ```
 -   **Generate an image:**
     ```bash
-    python generate_image.py "<prompt>" <output_path>
+    python scripts/generate_image.py "<prompt>" <output_path>
     ```
 -   **Upload a post to WordPress:**
     ```bash
-    python wordpress_uploader.py "<title>" <content_path> [image_path]
+    python scripts/wordpress_uploader.py "<title>" <content_path> [image_path]
     ```
 
 ---
@@ -93,7 +93,7 @@ This workflow automates the process of extracting valuable segments from a YouTu
 
 ### Usage
 
-The `video-cuts.workflow.md` file describes the manual steps of the workflow. I can be used inside a AI Agent tool. Using Gemini CLI a prompt like: "Run the @video-cuts.workflow.md script" can do the trick.
+The `workflows/video-cuts.workflow.md` file describes the manual steps of the workflow. It can be used inside a AI Agent tool. Using Gemini CLI a prompt like: "Run the @video-cuts.workflow.md script" can do the trick.
 
 ---
 
