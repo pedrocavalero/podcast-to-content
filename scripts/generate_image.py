@@ -41,7 +41,7 @@ def generate_image(prompt, output_path, model="gpt-image-1", size="1024x1024"):
             model=model,
             prompt=prompt,
             size=size, # Use the passed/validated size
-            quality="high",
+            quality="hd" if model == "dall-e-3" else "high",
             n=1,
         )
 
