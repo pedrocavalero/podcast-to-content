@@ -34,7 +34,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 3: Content Analysis & Cut Point Identification**
 
 1.  **Read the subtitle file** from `shorts-{VIDEO_ID}/*.srt`.
-2.  **Analyze the transcript to identify 10 interesting and valuable cuts** for a developer audience. Each cut should be between 30 and 50 seconds long *after* a 1.5x speed increase.
+2.  **Analyze the transcript to identify 10 interesting and valuable cuts** for a developer audience. Each cut should be between 30 and 55 seconds long *after* a 2.0x speed increase. Make sure the cuts has very interesting content.
 3.  **For each cut, define the following:**
     *   Start time (`start_time`)
     *   End time (`end_time`)
@@ -69,9 +69,9 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 5: Video Cutting and Speed Adjustment**
 
 1.  **For each of the 10 cuts, execute the following command:**
-    *   `ffmpeg -i "shorts-{VIDEO_ID}/*.mkv" -ss {start_time} -to {end_time} -vf "scale=-1:1920,crop=1080:1920,setpts=PTS/1.5" -af "atempo=1.5" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
+    *   `ffmpeg -y -i "shorts-{VIDEO_ID}/*.mkv" -ss {start_time} -to {end_time} -vf "scale=-1:1152,crop=1080:1152,pad=1080:1920:0:384,drawtext=text='{title}':fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(384-text_h)/2,subtitles='shorts-{VIDEO_ID}/How to Become an AI-powered Developer？ [ZnCY5zV9B80].en.srt',setpts=PTS/2.0" -af "atempo=2.0" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
     *   Where `{N}` is the cut number (1-10).
-    *   `-vf "scale=-1:1920,crop=1080:1920"` scales the video to a height of 1920 pixels, maintaining aspect ratio, and then crops the center 1080 pixels of width to create a vertical video.
+    *   `-vf "scale=-1:1152,crop=1080:1152,pad=1080:1920:0:384,drawtext=...,subtitles=..."` scales the video to a height of 1152 pixels, maintaining aspect ratio, crops the center 1080 pixels of width, pads the video with 384 pixels of black background on the top and bottom to create a 1080x1920 vertical video, overlays the short's title on the top black bar, and adds subtitles at the bottom.
     *   `-c:a aac -b:a 128k` is added to ensure audio is re-encoded to AAC, which is widely compatible, and to set a bitrate. This is important when changing video speed.
 
 ### **Step 6: Thumbnail Generation and Resizing**
