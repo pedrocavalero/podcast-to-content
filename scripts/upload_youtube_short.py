@@ -48,7 +48,7 @@ def upload_video(youtube, video_path, title, description, thumbnail_path=None):
         'snippet': {
             'title': title,
             'description': description,
-            'categoryId': '28' # Science & Technology. You can change this.
+            'categoryId': '10' # Category for YouTube Shorts.
         },
         'status': {
             'privacyStatus': 'private' # 'public', 'private', or 'unlisted'

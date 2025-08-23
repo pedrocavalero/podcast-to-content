@@ -19,11 +19,11 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 2: Video and Subtitle Download**
 
 1.  **Check if video and subtitle already exist in the shorts directory.**
-    *   Before downloading, check if a `.mp4` and `.srt` file exist in the `shorts-{VIDEO_ID}` directory.
-    *   If both exist, skip to Step 3.
+    *   Before downloading, check if a video file (`.mp4` or `.mkv`) and a `.srt` file exist in the `shorts-{VIDEO_ID}` directory.
+    *   If both video (mp4 or mkv) and srt exist, skip to Step 3.
 2.  **Check if video and subtitle exist in the cuts directory and move them.**
-    *   If a `.mp4` and `.srt` file exist in the `cuts-{VIDEO_ID}` directory:
-        *   Move the `.mp4` file: `mv "cuts-{VIDEO_ID}/*.mp4" "shorts-{VIDEO_ID}/"`
+    *   If a video file (`.mp4` or `.mkv`) and a `.srt` file exist in the `cuts-{VIDEO_ID}` directory:
+        *   Move the video file: `mv "cuts-{VIDEO_ID}/*.{mp4,mkv}" "shorts-{VIDEO_ID}/"`
         *   Move the `.srt` file: `mv "cuts-{VIDEO_ID}/*.srt" "shorts-{VIDEO_ID}/"`
         *   Skip to Step 3.
 3.  **Execute the download script.**
@@ -69,8 +69,9 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 5: Video Cutting and Speed Adjustment**
 
 1.  **For each of the 10 cuts, execute the following command:**
-    *   `ffmpeg -i "shorts-{VIDEO_ID}/*.mp4" -ss {start_time} -to {end_time} -vf "setpts=PTS/1.5" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
+    *   `ffmpeg -i "shorts-{VIDEO_ID}/*.mkv" -ss {start_time} -to {end_time} -vf "scale=-1:1920,crop=1080:1920,setpts=PTS/1.5" -af "atempo=1.5" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
     *   Where `{N}` is the cut number (1-10).
+    *   `-vf "scale=-1:1920,crop=1080:1920"` scales the video to a height of 1920 pixels, maintaining aspect ratio, and then crops the center 1080 pixels of width to create a vertical video.
     *   `-c:a aac -b:a 128k` is added to ensure audio is re-encoded to AAC, which is widely compatible, and to set a bitrate. This is important when changing video speed.
 
 ### **Step 6: Thumbnail Generation and Resizing**
