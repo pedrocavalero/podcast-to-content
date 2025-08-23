@@ -34,7 +34,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 3: Content Analysis & Cut Point Identification**
 
 1.  **Read the subtitle file** from `shorts-{VIDEO_ID}/*.srt`.
-2.  **Analyze the transcript to identify 10 interesting and valuable cuts** for a developer audience. Each cut should be between 30 and 55 seconds long *after* a 2.0x speed increase. Make sure the cuts has very interesting content.
+2.  **Analyze the transcript to identify 10 interesting and valuable cuts** for a developer audience. Each cut should be between 30 and 55 seconds long *after* a 2.0x speed increase (longer is preffered). Make sure the cuts has very interesting content.
 3.  **For each cut, define the following:**
     *   Start time (`start_time`)
     *   End time (`end_time`)
