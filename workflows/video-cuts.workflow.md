@@ -32,10 +32,10 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   End time (`end_time`)
     *   A catchy and descriptive title (`title`)
     *   A detailed and engaging `description` of the cut's content. The description must:
-        *   Be written in a compelling and engaging tone, using emojis to highlight key points.
-        *   Include timestamps (e.g., `00:45`) for at least 3 key moments within the cut to help viewers navigate.
+        *   Be written in a compelling and engaging tone, using emojis to highlight key points and create visual interest.
+        *   Integrate timestamps (e.g., `00:45`) naturally within the descriptive text, highlighting at least 3 key moments or topics discussed at those points. Use bulleted lists of timestamps but make the description of each line visually atractive with emojis. Make sure the timestamps are based on the cut video time, not from the original one.
         *   Clearly mention the original video's name and provide the `YOUTUBE_URL`.
-        *   Include a call-to-action with a link to the user's website (`USER_WEBSITE`).
+        *   Include a clear and concise call-to-action with a link to the user's website (`USER_WEBSITE`).
 
 ### **Step 4: Cuts Metadata Generation**
 
