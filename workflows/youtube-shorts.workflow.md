@@ -93,21 +93,12 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   `rm "shorts-{VIDEO_ID}/temp_title.txt"`
     *   **Rename the original SRT file back:** `mv "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME_NO_SPACES}" "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME}"`
 
-### **Step 6: Thumbnail Generation and Resizing**
+### **Step 6: Video Upload**
 
-1.  **For each cut, generate a thumbnail with a prompt that clearly describes the desired output:**
-    *   Create a variable `PROMPT` with the following content: "Generate a YouTube Short thumbnail for a video about software development. The thumbnail must prominently feature the text: '{title}'. The design should be eye-catching, modern, and relevant to the video's content to maximize audience engagement. The image should be interesting enough to make a developer want to click on it. The image should have a vertical aspect ratio suitable for YouTube Shorts."
-    *   Run the command: `source .venv/bin/activate && python scripts/generate_image.py "{PROMPT}" "shorts-{VIDEO_ID}/short{N}_thumbnail_raw.png" --model "gpt-image-1" --size "1024x1536"`
-    NOTE: Do not change the model or the size! The size is set for a vertical image.
-2.  **Resize the generated thumbnail to YouTube Shorts recommended size (720x1280):**
-    *   Run the command: `source .venv/bin/activate && python scripts/resize_image.py "shorts-{VIDEO_ID}/short{N}_thumbnail_raw.png" "shorts-{VIDEO_ID}/short{N}_thumbnail_720x1280.png" --width 720 --height 1280`
-
-### **Step 7: Video Upload**
-
-1.  **For each cut, upload the video to YouTube with its generated thumbnail:**
-    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_short.py --file "shorts-{VIDEO_ID}/short{N}.mp4" --title "{title} #Shorts" --description "{description}" --thumbnail "shorts-{VIDEO_ID}/short{N}_thumbnail_720x1280.png"`
+1.  **For each cut, upload the video to YouTube:**
+    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_short.py --file "shorts-{VIDEO_ID}/short{N}.mp4" --title "{title} #Shorts" --description "{description}"`
     *   Note: The title now includes `#Shorts` to help YouTube categorize it.
 
-### **Step 8: Completion**
+### **Step 7: Completion**
 
-1.  **Notify the user** that the process is complete and all video shorts, thumbnails, and the metadata file have been created and uploaded in the `shorts-{VIDEO_ID}` directory.
+1.  **Notify the user** that the process is complete and all video shorts and the metadata file have been created and uploaded in the `shorts-{VIDEO_ID}` directory.
