@@ -1,4 +1,3 @@
-
 import os
 import argparse
 import google.oauth2.credentials
@@ -90,14 +89,23 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Upload a video to YouTube.')
     parser.add_argument('--file', required=True, help='Path to the video file.')
     parser.add_argument('--title', required=True, help='Title of the video.')
-    parser.add_argument('--description', required=True, help='Description of the video.')
+    parser.add_argument('--description', help='Description of the video.')
+    parser.add_argument('--description_file', help='Path to a file containing the description of the video.')
     parser.add_argument('--thumbnail', help='Path to the thumbnail image file (optional).')
 
     args = parser.parse_args()
 
+    if args.description_file:
+        with open(args.description_file, 'r') as f:
+            video_description = f.read()
+    elif args.description:
+        video_description = args.description
+    else:
+        raise ValueError("Either --description or --description_file must be provided.")
+
     try:
         youtube = get_authenticated_service()
-        upload_video(youtube, args.file, args.title, args.description, args.thumbnail)
+        upload_video(youtube, args.file, args.title, video_description, args.thumbnail)
     except HttpError as e:
         print(f'An HTTP error {e.resp.status} occurred: {e.content.decode("utf-8")}')
     except Exception as e:
