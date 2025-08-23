@@ -68,11 +68,30 @@ This document outlines the step-by-step process for downloading a YouTube video 
 
 ### **Step 5: Video Cutting and Speed Adjustment**
 
-1.  **For each of the 10 cuts, execute the following command:**
-    *   `ffmpeg -y -i "shorts-{VIDEO_ID}/*.mkv" -ss {start_time} -to {end_time} -vf "scale=-1:1152,crop=1080:1152,pad=1080:1920:0:384,drawtext=text='{title}':fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(384-text_h)/2,subtitles='shorts-{VIDEO_ID}/How to Become an AI-powered Developer？ [ZnCY5zV9B80].en.srt',setpts=PTS/2.0" -af "atempo=2.0" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
+1.  **Before proceeding, identify the original SRT filename and its version without spaces:**
+    *   Find the downloaded SRT file (e.g., by running `find "shorts-{VIDEO_ID}" -name "*.srt"`). Let's call this `{ORIGINAL_SRT_FILENAME}`.
+    *   Create a version of this filename with spaces replaced by underscores. Let's call this `{ORIGINAL_SRT_FILENAME_NO_SPACES}`. (e.g., `How_to_Become_an_AI-powered_Developer_[ZnCY5zV9B80].en.srt`)
+
+2.  **For each of the 10 cuts, prepare the subtitle and title files:**
+    *   **Rename the original SRT file** to remove spaces (if not already done): `mv "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME}" "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME_NO_SPACES}"`
+    *   **Adjust subtitle timestamps:** Run `source .venv/bin/activate && python scripts/adjust_srt.py "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME_NO_SPACES}" {start_time} "shorts-{VIDEO_ID}/short{N}_temp_sub.srt"`
+    *   **Write title to a temporary file:** `echo "{title}" > "shorts-{VIDEO_ID}/temp_title.txt"`
+
+3.  **Execute the video cutting and speed adjustment command:**
+    *   `ffmpeg -y -ss {start_time} -to {end_time} -i "shorts-{VIDEO_ID}/*.mkv" -filter_complex "[0:v]scale=-1:1152,crop=1080:1152,pad=1080:1920:0:480[padded];[padded]subtitles=shorts-{VIDEO_ID}/short{N}_temp_sub.srt[subtitled];[subtitled]drawtext=textfile=shorts-{VIDEO_ID}/temp_title.txt:fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(480-text_h)/2[drawn];[drawn]setpts=PTS/2.0[v]" -map "[v]" -map 0:a -af "atempo=2.0" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
     *   Where `{N}` is the cut number (1-10).
-    *   `-vf "scale=-1:1152,crop=1080:1152,pad=1080:1920:0:384,drawtext=...,subtitles=..."` scales the video to a height of 1152 pixels, maintaining aspect ratio, crops the center 1080 pixels of width, pads the video with 384 pixels of black background on the top and bottom to create a 1080x1920 vertical video, overlays the short's title on the top black bar, and adds subtitles at the bottom.
-    *   `-c:a aac -b:a 128k` is added to ensure audio is re-encoded to AAC, which is widely compatible, and to set a bitrate. This is important when changing video speed.
+    *   The `-filter_complex` chain now includes:
+        *   `scale=-1:1152,crop=1080:1152,pad=1080:1920:0:480`: Scales, crops, and pads the video. The top padding is increased to 480 pixels.
+        *   `subtitles=shorts-{VIDEO_ID}/short{N}_temp_sub.srt`: Applies the time-shifted subtitles from the temporary SRT file.
+        *   `drawtext=textfile=shorts-{VIDEO_ID}/temp_title.txt:fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(480-text_h)/2`: Overlays the title from the temporary text file. The `y` coordinate is adjusted for the increased padding.
+        *   `setpts=PTS/2.0`: Adjusts video speed.
+    *   `-ss {start_time} -to {end_time}` are now placed before `-i` for accurate cutting.
+    *   `-c:a aac -b:a 128k` ensures audio re-encoding.
+
+4.  **Clean up temporary files:**
+    *   `rm "shorts-{VIDEO_ID}/short{N}_temp_sub.srt"`
+    *   `rm "shorts-{VIDEO_ID}/temp_title.txt"`
+    *   **Rename the original SRT file back:** `mv "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME_NO_SPACES}" "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME}"`
 
 ### **Step 6: Thumbnail Generation and Resizing**
 
