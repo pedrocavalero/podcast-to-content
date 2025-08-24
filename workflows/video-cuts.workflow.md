@@ -59,9 +59,10 @@ This document outlines the step-by-step process for downloading a YouTube video 
 
 ### **Step 5: Video Cutting**
 
-1.  **For each of the 5 cuts, execute the following command:**
-    *   `ffmpeg -i "cuts-{VIDEO_ID}/*.mp4" -ss {start_time} -to {end_time} -c copy "cuts-{VIDEO_ID}/cut{N}.mp4"`
-    *   Where `{N}` is the cut number (1-5).
+1.  **For each of the 5 cuts, calculate the duration** of the cut in seconds (`{duration}` = `{end_time}` - `{start_time}`).
+2.  **Execute the following command to cut the video with a 2-second fade-in and fade-out:**
+    *   `ffmpeg -ss {start_time} -i "cuts-{VIDEO_ID}/{video_file}" -t {duration} -vf "fade=in:d=2, fade=out:d=2:st={duration}-2" -af "afade=in:d=2, afade=out:d=2:st={duration}-2" "cuts-{VIDEO_ID}/cut{N}.mp4" -y`
+    *   Where `{video_file}` is the name of the source video file in `cuts-{VIDEO_ID}` (e.g., `.mp4`, `.mkv`), `{N}` is the cut number (1-5), and `{duration}` is the calculated duration in seconds.
 
 ### **Step 6: Thumbnail Generation and Resizing**
 
