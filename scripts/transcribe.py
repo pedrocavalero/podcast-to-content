@@ -25,8 +25,8 @@ def get_transcript(video_id, preserve_formatting=False):
         return f"Error: {e}"
 
 if __name__ == "__main__":
-    if len(sys.argv) <= 2:
-        print("Usage: python transcribe.py <video_id> -s")
+    if len(sys.argv) < 2:
+        print("Usage: python transcribe.py <video_id> [-s]")
     else:
         video_id = sys.argv[1]
         preserve_formatting = '-s' in sys.argv
