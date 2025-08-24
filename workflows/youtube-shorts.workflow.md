@@ -75,15 +75,15 @@ This document outlines the step-by-step process for downloading a YouTube video 
 2.  **For each of the 10 cuts, prepare the subtitle and title files:**
     *   **Rename the original SRT file** to remove spaces (if not already done): `mv "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME}" "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME_NO_SPACES}"`
     *   **Adjust subtitle timestamps:** Run `source .venv/bin/activate && python scripts/adjust_srt.py "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME_NO_SPACES}" {start_time} "shorts-{VIDEO_ID}/short{N}_temp_sub.srt"`
-    *   **Write title to a temporary file:** `echo "{title}" > "shorts-{VIDEO_ID}/temp_title.txt"`
+    *   **Write a multi-line title to a temporary file:** `TITLE="{title}" python -c 'import os, textwrap; print("\n".join(textwrap.wrap(os.environ["TITLE"], width=25)))' > "shorts-{VIDEO_ID}/temp_title.txt"`
 
 3.  **Execute the video cutting and speed adjustment command:**
-    *   `ffmpeg -y -ss {start_time} -to {end_time} -i "shorts-{VIDEO_ID}/*.mkv" -filter_complex "[0:v]scale=-1:1152,crop=1080:1152,pad=1080:1920:0:480[padded];[padded]subtitles=shorts-{VIDEO_ID}/short{N}_temp_sub.srt[subtitled];[subtitled]drawtext=textfile=shorts-{VIDEO_ID}/temp_title.txt:fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(480-text_h)/2[drawn];[drawn]setpts=PTS/2.0[v]" -map "[v]" -map 0:a -af "atempo=2.0" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
+    *   `ffmpeg -y -ss {start_time} -to {end_time} -i "shorts-{VIDEO_ID}/*.mkv" -filter_complex "[0:v]scale=-1:1152,crop=1080:1152,pad=1080:1920:0:480[padded];[padded]subtitles=filename='shorts-{VIDEO_ID}/short{N}_temp_sub.srt':force_style='Fontsize=12,PrimaryColour=&H00FFFF'[subtitled];[subtitled]drawtext=textfile=shorts-{VIDEO_ID}/temp_title.txt:fontfile='/System/Library/Fonts/Supplemental/Arial Bold.ttf':fontsize=70:fontcolor=yellow:x=(w-text_w)/2:y=(480-text_h)/2[drawn];[drawn]setpts=PTS/2.0[v]" -map "[v]" -map 0:a -af "atempo=2.0" -c:a aac -b:a 128k "shorts-{VIDEO_ID}/short{N}.mp4"`
     *   Where `{N}` is the cut number (1-10).
     *   The `-filter_complex` chain now includes:
         *   `scale=-1:1152,crop=1080:1152,pad=1080:1920:0:480`: Scales, crops, and pads the video. The top padding is increased to 480 pixels.
-        *   `subtitles=shorts-{VIDEO_ID}/short{N}_temp_sub.srt`: Applies the time-shifted subtitles from the temporary SRT file.
-        *   `drawtext=textfile=shorts-{VIDEO_ID}/temp_title.txt:fontfile=/System/Library/Fonts/Supplemental/Arial.ttf:fontsize=50:fontcolor=white:x=(w-text_w)/2:y=(480-text_h)/2`: Overlays the title from the temporary text file. The `y` coordinate is adjusted for the increased padding.
+        *   `subtitles=filename='shorts-{VIDEO_ID}/short{N}_temp_sub.srt':force_style='Fontsize=12,PrimaryColour=&H00FFFF'`: Applies the time-shifted subtitles from the temporary SRT file, with yellow color and smaller font.
+        *   `drawtext=textfile=shorts-{VIDEO_ID}/temp_title.txt:fontfile='/System/Library/Fonts/Supplemental/Arial Bold.ttf':fontsize=70:fontcolor=yellow:x=(w-text_w)/2:y=(480-text_h)/2`: Overlays the multi-line, bold, yellow title from the temporary text file. The `y` coordinate is adjusted for the increased padding.
         *   `setpts=PTS/2.0`: Adjusts video speed.
     *   `-ss {start_time} -to {end_time}` are now placed before `-i` for accurate cutting.
     *   `-c:a aac -b:a 128k` ensures audio re-encoding.
@@ -92,6 +92,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   `rm "shorts-{VIDEO_ID}/short{N}_temp_sub.srt"`
     *   `rm "shorts-{VIDEO_ID}/temp_title.txt"`
     *   **Rename the original SRT file back:** `mv "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME_NO_SPACES}" "shorts-{VIDEO_ID}/{ORIGINAL_SRT_FILENAME}"`
+
 
 ### **Step 6: Video Upload**
 
