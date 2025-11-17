@@ -1,0 +1,19 @@
+{
+  "autoApprove": {
+    "bash": [
+      "source .venv/bin/activate",
+      "source .venv/bin/activate && python scripts/generate_image.py*",
+      "source .venv/bin/activate && python scripts/resize_image.py*",
+      "source .venv/bin/activate && python scripts/upload_youtube_video.py*",
+      "source .venv/bin/activate && python scripts/transcribe.py*",
+      "source .venv/bin/activate && python scripts/wordpress_uploader.py*",
+      "source .venv/bin/activate && yt-dlp*",
+      "ffmpeg -y -i*",
+      "rm \"*/cut*_temp.mp4\"",
+      "ls -lh cuts-*/*.mp4",
+      "ls -lh cuts-*/*thumbnail*.png",
+      "ls -la cuts-*/"
+    ]
+  },
+  "description": "Auto-approve common workflow commands for podcast-to-content project"
+}

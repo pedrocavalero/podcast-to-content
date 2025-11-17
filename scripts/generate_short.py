@@ -16,7 +16,7 @@ def generate_short(video_id, input_video_path, srt_path, short_number, start_tim
     """Generates a single YouTube Short with title and subtitles."""
 
     shorts_dir = f"shorts-{video_id}"
-    temp_title_file = f'{shorts_dir}/temp_title.txt'
+    temp_title_file = f'{shorts_dir}/temp_title_{short_number}.txt'
     temp_srt_file = f'{shorts_dir}/short{short_number}_temp_sub.srt'
     temp_ass_file = f'{shorts_dir}/short{short_number}_temp_sub.ass'
     temp_cut_file = f'{shorts_dir}/short{short_number}_temp_cut.mp4'
