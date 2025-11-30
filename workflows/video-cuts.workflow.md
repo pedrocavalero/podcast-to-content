@@ -71,10 +71,14 @@ This document outlines the step-by-step process for downloading a YouTube video 
 
 ### **Step 6: Thumbnail Generation and Resizing**
 
-1.  **For each cut, generate a thumbnail with a prompt that clearly describes the desired output:**
-    *   Create a variable `PROMPT` with the following content: "Generate a YouTube thumbnail for a video about software development. The thumbnail must prominently feature the text: '{title}'. The design should be eye-catching, modern, and relevant to the video's content to maximize audience engagement. The image should be interesting enough to make a developer want to click on it."
-    *   Run the command: `source .venv/bin/activate && python scripts/generate_image.py "{PROMPT}" "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" --model "gpt-image-1" --size "1536x1024"`
-    NOTE: Do not change the model or the size!!!!!
+1.  **For each cut, generate a custom thumbnail prompt based on the `{title}`:**
+    *   **Analyze the `{title}`** to determine the most appropriate:
+        *   **Expression**: A facial expression that matches the emotion of the title (e.g., shocked, happy, serious, confused).
+        *   **Background**: A visual setting that symbolizes the topic (e.g., code on a screen, futuristic city, office setting).
+        *   **Text**: A short, punchy, high-contrast text overlay (max 3-4 words) derived from the title.
+    *   **Construct the `PROMPT` variable** using these generated details:
+        *   "Create a YouTube thumbnail using the provided reference image for a video titled '{title}'. 1. Focus: Crop and zoom in on the face from the reference photo. 2. Expression: {generated_expression}. 3. Background: {generated_background}. 4. Text: Include the text '{generated_text}' in large, bold, high-contrast typography. 5. Style: High-quality, 4k, professional YouTube thumbnail style, vibrant colors, 16:9 aspect ratio."
+    *   Run the command: `source .venv/bin/activate && python scripts/generate_image.py "{PROMPT}" "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" --aspect_ratio "16:9" --reference_image "workflows/Foto-3x4.jpg"`
 2.  **Resize the generated thumbnail to YouTube's recommended size (1280x720):**
     *   Run the command: `source .venv/bin/activate && python scripts/resize_image.py "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" "cuts-{VIDEO_ID}/cut{N}_thumbnail_1280x720.png" --width 1280 --height 720`
 
