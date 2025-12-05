@@ -18,10 +18,12 @@ def srt_to_text(srt_path, output_path):
             # Skip empty lines
             if not line:
                 continue
-            output.append(line)
+            # Only add if not a duplicate of the last line added
+            # Check if output is empty OR if current line is different from the last line added
+            if not output or line != output[-1]:
+                output.append(line)
             
-        # Join with spaces for a continuous text block
-        text = ' '.join(output)
+        text = '\n'.join(output)
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(text)

@@ -16,7 +16,8 @@ This document outlines the step-by-step process for converting a YouTube video i
 ### **Step 2: Transcription**
 
 1.  **Download subtitles using yt-dlp.**
-    -   Run the command: `source .venv/bin/activate && yt-dlp --write-auto-sub --sub-lang en --skip-download --convert-subs srt --output "blog-{VIDEO_ID}/transcript" "https://www.youtube.com/watch?v={VIDEO_ID}"`
+    -   Run the command: `source .venv/bin/activate && yt-dlp --write-auto-sub --sub-lang en --skip-download --convert-subs srt --output "blog-{VIDEO_ID}/transcript" --cookies-from-browser chrome "https://www.youtube.com/watch?v={VIDEO_ID}"`
+    -   *Note: If `chrome` is not available or you use a different browser, replace `chrome` with your browser's name (e.g., `firefox`, `safari`), or refer to yt-dlp documentation for more options.*
     -   *Note: This typically generates a file named `blog-{VIDEO_ID}/transcript.en.srt`.*
 2.  **Convert to plain text.**
     -   Run the command: `source .venv/bin/activate && python3 scripts/srt_to_text.py blog-{VIDEO_ID}/transcript.en.srt blog-{VIDEO_ID}/transcript.txt`
@@ -92,7 +93,7 @@ This document outlines the step-by-step process for converting a YouTube video i
        Create a short, descriptive prompt for a text-to-image AI model. The image should be a feature image for a blog post with the title: "{post_title}". The style should be digital art, suitable for a tech blog.
        ```
     b. **Execute the image generation script:**
-       - Run the command: `source .venv/bin/activate && python generate_image.py "{image_prompt}" blog-{VIDEO_ID}/post{N}.png`
+       - Run the command: `source .venv/bin/activate && python scripts/generate_image.py "{image_prompt}" blog-{VIDEO_ID}/post{N}.png --model "dall-e-3"`
 2.  **Note**
     -   In case of error and the images are not saved, stop the workflow
 
