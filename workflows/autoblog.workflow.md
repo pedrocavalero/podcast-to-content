@@ -15,12 +15,15 @@ This document outlines the step-by-step process for converting a YouTube video i
 
 ### **Step 2: Transcription**
 
-1.  **Execute the transcription script.**
-    -   Run the command: `source .venv/bin/activate && python3 transcribe.py {VIDEO_ID} -s >> blog-{VIDEO_ID}/transcript.txt`
-2.  **Save the output.**
-    -   Save the resulting transcript to a file named `blog-{VIDEO_ID}/transcript.txt`.
-3.  **Note**: 
-    -   In case of error and the transcript is not saved, stop the workflow
+1.  **Download subtitles using yt-dlp.**
+    -   Run the command: `source .venv/bin/activate && yt-dlp --write-auto-sub --sub-lang en --skip-download --convert-subs srt --output "blog-{VIDEO_ID}/transcript" "https://www.youtube.com/watch?v={VIDEO_ID}"`
+    -   *Note: This typically generates a file named `blog-{VIDEO_ID}/transcript.en.srt`.*
+2.  **Convert to plain text.**
+    -   Run the command: `source .venv/bin/activate && python3 scripts/srt_to_text.py blog-{VIDEO_ID}/transcript.en.srt blog-{VIDEO_ID}/transcript.txt`
+3.  **Verify and Save.**
+    -   Ensure `blog-{VIDEO_ID}/transcript.txt` exists and contains text.
+4.  **Note**: 
+    -   In case of error (e.g., yt-dlp fails or transcript is empty), stop the workflow.
 
 ### **Step 3: Content Analysis & Summarization**
 
