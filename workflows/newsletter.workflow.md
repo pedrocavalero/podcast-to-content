@@ -51,19 +51,23 @@ This document outlines the step-by-step process for converting a YouTube video i
 
        **Instructions:**
 
-       - **Tone:** Friendly, First-Person ("I"). You are Pedro Cavalero, talking to your fellow subscribers.
+       - **Tone:** Friendly, First-Person ("I"). You are Pedro Cavalero, a senior developer talking to your fellow subscribers. Authentic, "Developer-to-Developer". No marketing fluff.
        - **Audience:** Developers interested in Software Development, AI, Programming, Architecture, and Career.
        - **Structure:**
-         - **Subject Line:** Catchy, short, and relevant to the topic.
-         - **Greeting:** Friendly greeting (e.g., "Hey devs," "Hello friend,").
-         - **Opening:** Connect the topic to a recent podcast episode you hosted. "In the latest episode, we discussed..."
-         - **Body:** Discuss the topic in depth using insights from the transcript. Use bullet points for readability. Make it feel like a conversation.
-         - **Key Takeaways:** Highlight actionable advice.
+         - **Subject Line:** *Critical*: High-impact, short (< 50 chars), and intriguing. (e.g., "The end of coding?", "Why your architecture fails").
+         - **Preheader Text:** A separate line at the very top. One sentence that teases the content to boost open rates.
+         - **Opening (The Hook):** Do *not* start with "In this episode...". Start with a relatable problem, a controversial opinion, or a surprising fact from the transcript to grab attention immediately. Then connect it to the episode.
+         - **Body:** 
+           - Discuss the topic in depth.
+           - **Value First:** Focus on *insights* and *solutions*, not just a summary of what happened.
+           - **Scannability:** Use **bold** for key phrases. Keep paragraphs extremely short (1-3 sentences).
+           - Use bullet points for lists.
+         - **Key Takeaways:** 3 distinct, actionable bullet points.
          - **Call to Action (CTA):** 
-            - "Listen to the full episode here: [Link]"
-            - "Reply to this email with your thoughts."
-            - "Share this with a developer friend who needs to hear this."
+            - Primary: "Listen to the full episode here: [Link]"
+            - Secondary (Engagement): "What's your take? Hit reply and let me know."
          - **Sign-off:** "Cheers," or "Happy coding," followed by "Pedro Cavalero".
+         - **P.S.:** Add a short "P.S." with a quick tip, a personal note, or a reminder to share the newsletter.
        - **Category:** The content should fit into "AI" or "Carreiras" (Careers).
 
        **Inputs:**
