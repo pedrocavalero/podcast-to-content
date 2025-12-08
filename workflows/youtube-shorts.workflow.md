@@ -84,6 +84,24 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_short.py --file "{SHORTS_DIR}/short{N}.mp4" --title "{title} #Shorts" --description "{description}"`
     *   Note: The title now includes `#Shorts` to help YouTube categorize it.
 
-### **Step 7: Completion**
+### **Step 7: Video Scheduling and Playlist Assignment**
 
-1.  **Notify the user** that the process is complete and all video shorts and the metadata file have been created and uploaded in the `{SHORTS_DIR}` directory.
+1.  **Ask the user if they want to schedule the videos or add them to playlists.**
+    *   If yes, ask for the following:
+        *   **Start Date**: The date and time to start scheduling from (ISO 8601 format, e.g., `2025-12-25`).
+        *   **Playlists** (Optional): Names or IDs of playlists to add the videos to.
+2.  **For each uploaded video (short) indexed `i` (from 0 to N-1):**
+    *   **Calculate the Schedule Date:**
+        *   **Strategy**: Schedule videos **Daily** at **12:00 PM (12:00:00)** local time (or the timezone of the start date).
+        *   **Logic**:
+            *   Set the time of the `Start Date` to `12:00:00`.
+            *   If the `Start Date` (with 12pm time) is in the past, move to the next day.
+            *   The first video is scheduled for this calculated start date/time.
+            *   Each subsequent video is scheduled for the previous video's date + **1 day**.
+    *   **Retrieve the Video ID** from the upload step.
+    *   **Command:** `source .venv/bin/activate && python scripts/update_youtube_video.py --video_id {VIDEO_ID} --schedule "{CALCULATED_SCHEDULE_DATE}" --playlists {PLAYLISTS}`
+    *   *Self-correction*: If the user didn't provide playlists, omit the `--playlists` argument. If they didn't provide a start date (only playlists), omit `--schedule`.
+
+### **Step 8: Completion**
+
+1.  **Notify the user** that the process is complete and all video shorts and the metadata file have been created, uploaded, and scheduled/organized in the `{SHORTS_DIR}` directory.
