@@ -36,44 +36,55 @@ This document outlines the step-by-step process for converting a YouTube video i
 5.  **Note**: 
     -   In case of error (e.g., yt-dlp fails or transcript is empty), stop the workflow.
 
-### **Step 3: Content Analysis & Summarization**
+### **Step 3: Content Analysis & Series Planning**
 
 1.  **Read the transcript** from `{NEWSLETTER_DIR}/transcript.txt`.
-2.  **Based on the transcript, what are the 3 main topics of the video?** For each topic, provide a one-paragraph summary.
+2.  **Plan a 3-part Newsletter Series:** 
+    -   Based on the transcript, create a cohesive plan for 3 distinct newsletters that form a logical sequence (e.g., Part 1: The Core Concept/Problem, Part 2: Practical Implementation/Solution, Part 3: Advanced Tips/Future Outlook).
+    -   For each newsletter, define:
+        -   **Topic Title:** A distinct angle.
+        -   **Specific Focus:** What exactly this email covers (and what it doesn't).
+        -   **Connection:** How it relates to the previous/next email.
+    -   **Constraint:** The topics must NOT overlap significantly. They must look like a curated series.
 3.  **Save the result** to a file named `{NEWSLETTER_DIR}/summary.md`.
 
 ### **Step 4: Newsletter Generation**
 
-1.  **Parse the topics** from `{NEWSLETTER_DIR}/summary.md`.
-2.  **For each of the 3 topics, perform the following:**
+1.  **Parse the series plan** from `{NEWSLETTER_DIR}/summary.md`.
+2.  **For each of the 3 newsletters (Part N), perform the following:**
     a. **Generate Newsletter Content:** 
-       Create an engaging, friendly newsletter email based on the provided topic, summary, and full transcript.
+       Create an engaging, friendly newsletter email based on the `Series Plan`, `Specific Focus`, and full transcript.
 
        **Instructions:**
 
+       - **Context:** This is email #{N} of a 3-part series based on the podcast. 
        - **Tone:** Friendly, First-Person ("I"). You are Pedro Cavalero, a senior developer talking to your fellow subscribers. Authentic, "Developer-to-Developer". No marketing fluff.
        - **Audience:** Developers interested in Software Development, AI, Programming, Architecture, and Career.
        - **Structure:**
-         - **Subject Line:** *Critical*: High-impact, short (< 50 chars), and intriguing. (e.g., "The end of coding?", "Why your architecture fails").
-         - **Preheader Text:** A separate line at the very top. One sentence that teases the content to boost open rates.
-         - **Opening (The Hook):** Do *not* start with "In this episode...". Start with a relatable problem, a controversial opinion, or a surprising fact from the transcript to grab attention immediately. Then connect it to the episode.
+         - **Subject Line:** *Crucial Formatting*: must be the **first line** of the file, formatted as a **Markdown H1 Header** (e.g. `# Subject: {Topic}`). Do NOT use the prefix "Subject Line:".
+         - **Preheader Text:** Must be the **second line**, formatted as a **Blockquote** (e.g. `> Preheader...`).
+         - **Opening (The Hook):** Start with a relatable problem or insight specific to *this* email's focus. Connect to the podcast.
          - **Body:** 
-           - Discuss the topic in depth.
-           - **Value First:** Focus on *insights* and *solutions*, not just a summary of what happened.
-           - **Scannability:** Use **bold** for key phrases. Keep paragraphs extremely short (1-3 sentences).
-           - Use bullet points for lists.
-         - **Key Takeaways:** 3 distinct, actionable bullet points.
+           - Discuss the *specific focus* of this email in depth. **Do not repeat general summaries of the whole episode.**
+           - **Episode References:** Explicitly reference what was said in the episode (e.g., "As we discussed...", "I mentioned in the show...") to make the ideas concrete and easy to understand.
+           - **Value First:** Focus on *insights* and *solutions*.
+           - **Scannability (Strict):** 
+             - Use **bold text** to highlight key ideas. 
+             - **Constraint:** Paragraphs must be **maximum 2 sentences long**.
+             - Use bullet points for lists.
+         - **Key Takeaways:** 3 distinct, actionable bullet points specific to this angle.
          - **Call to Action (CTA):** 
-            - Primary: "Listen to the full episode here: [Link]"
+            - Primary: "Listen to the full episode here: {youtube_url}"
             - Secondary (Engagement): "What's your take? Hit reply and let me know."
          - **Sign-off:** "Cheers," or "Happy coding," followed by "Pedro Cavalero".
-         - **P.S.:** Add a short "P.S." with a quick tip, a personal note, or a reminder to share the newsletter.
+         - **P.S.:** Add a short "P.S." related to the series (e.g. "Stay tuned for Part {N+1} where we discuss..." if not the last one).
        - **Category:** The content should fit into "AI" or "Carreiras" (Careers).
 
        **Inputs:**
-       - Topic: {topic_title}
-       - Summary: {topic_summary}
+       - Series Plan: {series_plan_content} (Use this to understand the flow)
+       - Current Focus: {specific_topic_focus} (STRICTLY adhere to this)
        - Full Transcript: {transcript_content}
+       - YouTube URL: https://www.youtube.com/watch?v={VIDEO_ID}
     b. **Save the newsletter** to a file named `{NEWSLETTER_DIR}/newsletter{N}.md`, where {N} is the number (1-3).
 
 ### **Step 5: Content Review and Refinement**
