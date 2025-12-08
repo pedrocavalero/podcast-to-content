@@ -14,8 +14,10 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Store this value as `USER_WEBSITE`.
 3.  **Extract the video ID** from the `YOUTUBE_URL`.
     *   Store this value as `VIDEO_ID`.
-4.  **Get the current date** in `yy-mm-dd` format.
-    *   Store this value as `DATE`.
+4.  **Determine the DATE value.**
+    *   **Check if a folder exists** in the format `yy-mm-dd-{VIDEO_ID}` (e.g. using `ls -d *-{VIDEO_ID}`).
+    *   **If found:** Extract the date part (`yy-mm-dd`) from the folder name and use it as `DATE`.
+    *   **If not found:** Get the current date in `yy-mm-dd` format and use it as `DATE`.
 5.  **Define the working directory** as `{DATE}-{VIDEO_ID}/cuts`.
     *   Store this value as `CUTS_DIR`.
 6.  **Define the download directory** as `{DATE}-{VIDEO_ID}/download`.

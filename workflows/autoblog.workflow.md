@@ -10,21 +10,27 @@ This document outlines the step-by-step process for converting a YouTube video i
 
 1.  **Ask the user for the YouTube video ID.**
     -   Store this value as `VIDEO_ID`.
-2.  **Get the current date** in `yy-mm-dd` format.
-    -   Store this value as `DATE`.
+2.  **Determine the DATE value.**
+    -   **Check if a folder exists** in the format `yy-mm-dd-{VIDEO_ID}` (e.g. using `ls -d *-{VIDEO_ID}`).
+    -   **If found:** Extract the date part (`yy-mm-dd`) from the folder name and use it as `DATE`.
+    -   **If not found:** Get the current date in `yy-mm-dd` format and use it as `DATE`.
 3.  **Define the working directory** as `{DATE}-{VIDEO_ID}/blog`.
     -   Store this value as `BLOG_DIR`.
-4.  **Create the directory** `{BLOG_DIR}` (and its parent `{DATE}-{VIDEO_ID}` if needed) to store all generated assets.
-5.  **When searching for files or folders, always include gitignored files.**
+4.  **Define the download directory** as `{DATE}-{VIDEO_ID}/download`.
+    -   Store this value as `DOWNLOAD_DIR`.
+5.  **Create the directories** `{BLOG_DIR}` and `{DOWNLOAD_DIR}` (and their parent `{DATE}-{VIDEO_ID}` if needed) to store all generated assets.
+6.  **When searching for files or folders, always include gitignored files.**
 
 ### **Step 2: Transcription**
 
-1.  **Download subtitles using yt-dlp.**
-    -   Run the command: `source .venv/bin/activate && yt-dlp --write-auto-sub --sub-lang en --skip-download --convert-subs srt --output "{BLOG_DIR}/transcript" --cookies-from-browser chrome "https://www.youtube.com/watch?v={VIDEO_ID}"`
+1.  **Check if transcript already exists.**
+    -   Check if a `.srt` file exists in `{DOWNLOAD_DIR}` (e.g. `{DOWNLOAD_DIR}/*.srt`).
+    -   If it exists, skip the download step.
+2.  **Download subtitles using yt-dlp.**
+    -   Run the command: `source .venv/bin/activate && yt-dlp -P {DOWNLOAD_DIR} --write-auto-sub --sub-lang en --skip-download --convert-subs srt --cookies-from-browser chrome "https://www.youtube.com/watch?v={VIDEO_ID}"`
     -   *Note: If `chrome` is not available or you use a different browser, replace `chrome` with your browser's name (e.g., `firefox`, `safari`), or refer to yt-dlp documentation for more options.*
-    -   *Note: This typically generates a file named `{BLOG_DIR}/transcript.en.srt`.*
-2.  **Convert to plain text.**
-    -   Run the command: `source .venv/bin/activate && python3 scripts/srt_to_text.py {BLOG_DIR}/transcript.en.srt {BLOG_DIR}/transcript.txt`
+3.  **Convert to plain text.**
+    -   Run the command: `source .venv/bin/activate && python3 scripts/srt_to_text.py {DOWNLOAD_DIR}/*.srt {BLOG_DIR}/transcript.txt`
 3.  **Verify and Save.**
     -   Ensure `{BLOG_DIR}/transcript.txt` exists and contains text.
 4.  **Note**: 
