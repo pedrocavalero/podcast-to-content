@@ -50,8 +50,8 @@ def organize_folders(dry_run=False):
         # Calculate target parent directory name
         try:
             date_obj = get_creation_date(reference_path)
-            # Format: yy-dd-mm
-            date_str = date_obj.strftime('%y-%d-%m')
+            # Format: yy-mm-dd
+            date_str = date_obj.strftime('%y-%m-%d')
             target_parent = f"{date_str}-{video_id}"
         except Exception as e:
             print(f"Error getting date for {reference_path}: {e}")

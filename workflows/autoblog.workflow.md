@@ -10,7 +10,7 @@ This document outlines the step-by-step process for converting a YouTube video i
 
 1.  **Ask the user for the YouTube video ID.**
     -   Store this value as `VIDEO_ID`.
-2.  **Get the current date** in `yy-dd-mm` format.
+2.  **Get the current date** in `yy-mm-dd` format.
     -   Store this value as `DATE`.
 3.  **Define the working directory** as `{DATE}-{VIDEO_ID}/blog`.
     -   Store this value as `BLOG_DIR`.
