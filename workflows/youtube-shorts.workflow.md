@@ -20,6 +20,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Store this value as `SHORTS_DIR`.
     *   Also define `CUTS_DIR` as `{DATE}-{VIDEO_ID}/cuts`.
 6.  **Create the directory** `{SHORTS_DIR}` (and its parent `{DATE}-{VIDEO_ID}` if needed) to store all generated assets.
+7.  **When searching for files or folders, always include gitignored files.**
 
 ### **Step 2: Video and Subtitle Download**
 

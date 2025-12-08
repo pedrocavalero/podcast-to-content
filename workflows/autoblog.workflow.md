@@ -15,6 +15,7 @@ This document outlines the step-by-step process for converting a YouTube video i
 3.  **Define the working directory** as `{DATE}-{VIDEO_ID}/blog`.
     -   Store this value as `BLOG_DIR`.
 4.  **Create the directory** `{BLOG_DIR}` (and its parent `{DATE}-{VIDEO_ID}` if needed) to store all generated assets.
+5.  **When searching for files or folders, always include gitignored files.**
 
 ### **Step 2: Transcription**
 

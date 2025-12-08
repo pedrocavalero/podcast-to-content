@@ -19,6 +19,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
 5.  **Define the working directory** as `{DATE}-{VIDEO_ID}/cuts`.
     *   Store this value as `CUTS_DIR`.
 6.  **Create the directory** `{CUTS_DIR}` (and its parent `{DATE}-{VIDEO_ID}` if needed) to store all generated assets.
+7.  **When searching for files or folders, always include gitignored files.**
 
 ### **Step 2: Video and Subtitle Download**
 
