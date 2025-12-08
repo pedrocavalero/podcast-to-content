@@ -12,10 +12,10 @@ def run_command(command):
         raise subprocess.CalledProcessError(process.returncode, command)
     print(process.stdout)
 
-def generate_short(video_id, input_video_path, srt_path, short_number, start_time, end_time, title):
+def generate_short(output_dir, input_video_path, srt_path, short_number, start_time, end_time, title):
     """Generates a single YouTube Short with title and subtitles."""
 
-    shorts_dir = f"shorts-{video_id}"
+    shorts_dir = output_dir
     temp_title_file = f'{shorts_dir}/temp_title_{short_number}.txt'
     temp_srt_file = f'{shorts_dir}/short{short_number}_temp_sub.srt'
     temp_ass_file = f'{shorts_dir}/short{short_number}_temp_sub.ass'
@@ -63,10 +63,10 @@ def generate_short(video_id, input_video_path, srt_path, short_number, start_tim
 
 if __name__ == "__main__":
     if len(sys.argv) != 8:
-        print("Usage: python generate_short.py <video_id> <input_video_path> <srt_path> <short_number> <start_time> <end_time> <title>")
+        print("Usage: python generate_short.py <output_dir> <input_video_path> <srt_path> <short_number> <start_time> <end_time> <title>")
         sys.exit(1)
 
-    video_id = sys.argv[1]
+    output_dir = sys.argv[1]
     input_video_path = sys.argv[2]
     srt_path = sys.argv[3]
     short_number = sys.argv[4]
@@ -74,4 +74,4 @@ if __name__ == "__main__":
     end_time = sys.argv[6]
     title = sys.argv[7]
 
-    generate_short(video_id, input_video_path, srt_path, short_number, start_time, end_time, title)
+    generate_short(output_dir, input_video_path, srt_path, short_number, start_time, end_time, title)
