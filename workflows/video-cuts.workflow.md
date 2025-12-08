@@ -99,6 +99,24 @@ This document outlines the step-by-step process for downloading a YouTube video 
 1.  **For each cut, upload the video to YouTube with its generated thumbnail:**
     *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_video.py --file "{CUTS_DIR}/cut{N}.mp4" --title "{title}" --description "{description}" --thumbnail "{CUTS_DIR}/cut{N}_thumbnail_1280x720.png"`
 
-### **Step 8: Completion**
+### **Step 8: Video Scheduling and Playlist Assignment**
 
-1.  **Notify the user** that the process is complete and all video cuts, thumbnails, and the metadata file have been created and uploaded in the `{CUTS_DIR}` directory.
+1.  **Ask the user if they want to schedule the videos or add them to playlists.**
+    *   If yes, ask for the following:
+        *   **Start Date**: The date and time to start scheduling from (ISO 8601 format, e.g., `2025-12-25`).
+        *   **Playlists** (Optional): Names or IDs of playlists to add the videos to.
+2.  **For each uploaded video (cut) indexed `i` (from 0 to N-1):**
+    *   **Calculate the Schedule Date:**
+        *   **Strategy**: Schedule videos on **Wednesdays** and **Saturdays** at **12:00 PM (12:00:00)** local time (or the timezone of the start date).
+        *   **Logic**:
+            *   Find the first available Wednesday or Saturday at or after the provided `Start Date`.
+            *   Set the time to `12:00:00`.
+            *   For subsequent videos, find the *next* Wednesday or Saturday in the sequence.
+        *   *Example*: If Start Date is Monday, first video is scheduled for this Wednesday. If Start Date is Thursday, first video is this Saturday.
+    *   **Retrieve the Video ID**: Use the ID returned/known from the upload step.
+    *   **Command:** `source .venv/bin/activate && python scripts/update_youtube_video.py --video_id {VIDEO_ID} --schedule "{CALCULATED_SCHEDULE_DATE}" --playlists {PLAYLISTS}`
+    *   *Self-correction*: If the user didn't provide playlists, omit the `--playlists` argument. If they didn't provide a start date (only playlists), omit `--schedule`.
+
+### **Step 9: Completion**
+
+1.  **Notify the user** that the process is complete and all video cuts, thumbnails, and the metadata file have been created, uploaded, and scheduled/organized in the `{CUTS_DIR}` directory.
