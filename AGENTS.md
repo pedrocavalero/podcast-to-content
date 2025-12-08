@@ -68,3 +68,10 @@ When a user wants to create a new workflow or improve an existing one, the agent
 -   **Virtual Environment:** All code should be written with the assumption that it will be executed within the project's virtual environment.
 -   **Dependency Management:** Use `pip` and `requirements.txt` to manage all Python dependencies.
 -   **Best Practices:** Encourage the use of modular functions, clear variable names, and error handling.
+
+#### c. Command Configuration
+
+-   **Update Commands:** When creating or modifying a workflow, ensure that the corresponding command files are updated or created.
+-   **Claude Commands:** Update `.claude/commands/*.md` files. These should be simple and strictly point to the corresponding workflow file.
+-   **Gemini CLI Commands:** Update `.gemini/commands/*.toml` files. These should mirrors the Claude commands and point to the corresponding workflow file.
+-   **Consistency:** Ensure both sets of commands (Claude and Gemini) are consistent and referencing the correct workflow and arguments.

@@ -1,0 +1,2 @@
+description = "Execute the YouTube Video to Shorts workflow"
+prompt = "Execute the YouTube Video to Shorts workflow from `workflows/youtube-shorts.workflow.md` for YouTube URL: {{youtube_url}} with {{num_shorts}} shorts, using website: {{user_website}}."
