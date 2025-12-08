@@ -78,7 +78,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
         *   **Text**: A short, punchy, high-contrast text overlay (max 3-4 words) derived from the title.
     *   **Construct the `PROMPT` variable** using these generated details:
         *   "Create a YouTube thumbnail using the provided reference image for a video titled '{title}'. 1. Focus: Crop and zoom in on the face from the reference photo. 2. Expression: {generated_expression}. 3. Background: {generated_background}. 4. Text: Include the text '{generated_text}' in large, bold, high-contrast typography. 5. Style: High-quality, 4k, professional YouTube thumbnail style, vibrant colors, 16:9 aspect ratio."
-    *   Run the command: `source .venv/bin/activate && python scripts/generate_image.py "{PROMPT}" "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" --aspect_ratio "16:9" --reference_image "workflows/Foto-3x4.jpg"`
+    *   Run the command: `source .venv/bin/activate && python scripts/generate_image_nano_banana.py "{PROMPT}" "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" --aspect_ratio "16:9" --reference_image "workflows/Foto-3x4.jpg"`
 2.  **Resize the generated thumbnail to YouTube's recommended size (1280x720):**
     *   Run the command: `source .venv/bin/activate && python scripts/resize_image.py "cuts-{VIDEO_ID}/cut{N}_thumbnail_raw.png" "cuts-{VIDEO_ID}/cut{N}_thumbnail_1280x720.png" --width 1280 --height 720`
 
