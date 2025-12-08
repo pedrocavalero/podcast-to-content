@@ -7,6 +7,7 @@ Currently, there are three main workflows available:
 1.  **Autoblog Workflow:** Converts a YouTube video into a series of blog posts, complete with featured images, and publishes them to WordPress.
 2.  **Video Cuts Workflow:** Extracts interesting segments from a YouTube video, generates thumbnails, and uploads them as new short videos to YouTube.
 3.  **YouTube Video to Shorts Workflow:** Downloads a YouTube video and its subtitles, analyzes the content to find valuable segments, creates YouTube Shorts from those segments, and generates metadata for a shorts channel.
+4.  **Newsletter Workflow:** Converts a YouTube video into a series of engaging weekly newsletters for developers and schedules them on WordPress.
 
 ---
 
@@ -53,8 +54,27 @@ To run the individual scripts:
     ```
 -   **Upload a post to WordPress:**
     ```bash
-    python scripts/wordpress_uploader.py "<title>" <content_path> [image_path]
+    python scripts/wordpress_uploader.py "<title>" <content_path> [image_path] --tags "newsletter" --categories "AI" --status "future" --publish_date "2023-12-25T10:00:00"
     ```
+
+---
+
+## Newsletter Workflow
+
+This workflow converts a YouTube video into engaging, weekly newsletters for developers.
+
+### Features
+-   **Podcast to Newsletter:** Converts video transcripts into friendly, first-person newsletters.
+-   **Engagement Focused:** Uses best practices like hooks, scannability, and clear CTAs.
+-   **Weekly Scheduling:** Automatically schedules newsletters to be published every Sunday on WordPress.
+-   **AI Images:** Generates custom featured images for each newsletter.
+
+### Usage
+Run the workflow using the Gemini CLI:
+```bash
+gemini run workflows/newsletter.workflow.md
+```
+Or use the Claude command: `Run the newsletter workflow for video ID ...`
 
 ---
 
