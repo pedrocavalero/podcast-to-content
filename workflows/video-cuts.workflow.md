@@ -18,19 +18,24 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Store this value as `DATE`.
 5.  **Define the working directory** as `{DATE}-{VIDEO_ID}/cuts`.
     *   Store this value as `CUTS_DIR`.
-6.  **Create the directory** `{CUTS_DIR}` (and its parent `{DATE}-{VIDEO_ID}` if needed) to store all generated assets.
-7.  **When searching for files or folders, always include gitignored files.**
+6.  **Define the download directory** as `{DATE}-{VIDEO_ID}/download`.
+    *   Store this value as `DOWNLOAD_DIR`.
+7.  **Create the directories** `{CUTS_DIR}` and `{DOWNLOAD_DIR}` (and their parent `{DATE}-{VIDEO_ID}` if needed) to store all generated assets.
+8.  **When searching for files or folders, always include gitignored files.**
 
 ### **Step 2: Video and Subtitle Download**
 
-1.  **Execute the download script.**
-    *   Run the command: `source .venv/bin/activate && yt-dlp -P {CUTS_DIR} --write-auto-subs --sub-format srt "{YOUTUBE_URL}"`
-2.  **Note**:
+1.  **Check if video and subtitle already exist in the download directory.**
+    *   Before downloading, check if a video file (`.mp4` or `.mkv`) and a `.srt` file exist in the `{DOWNLOAD_DIR}` directory.
+    *   If both video (mp4 or mkv) and srt exist, skip to Step 3.
+2.  **Execute the download script.**
+    *   Run the command: `source .venv/bin/activate && yt-dlp -P {DOWNLOAD_DIR} --write-auto-subs --sub-format srt "{YOUTUBE_URL}"`
+3.  **Note**:
     *   In case of error and the video or subtitles are not downloaded, stop the workflow.
 
 ### **Step 3: Content Analysis & Cut Point Identification**
 
-1.  **Read the subtitle file** from `{CUTS_DIR}/*.srt`.
+1.  **Read the subtitle file** from `{DOWNLOAD_DIR}/*.srt`.
 2.  **Analyze the transcript to identify 5 interesting and valuable cuts** for a developer audience. Each cut should be between 5 and 10 minutes long.
 3.  **For each cut, define the following:**
     *   Start time (`start_time`)
@@ -67,12 +72,12 @@ This document outlines the step-by-step process for downloading a YouTube video 
 1.  **For each of the 5 cuts, calculate the duration** of the cut in seconds (`{duration}` = `{end_time}` - `{start_time}`).
 2.  **Execute the following commands to cut the video with a 2-second fade-in and fade-out:**
     *   **Step 2.1: Apply fade-in and create a temporary file.**
-        *   `ffmpeg -y -i "{CUTS_DIR}/{video_file}" -ss {start_time} -to {end_time} -vf "fade=t=in:st=0:d=2" -c:a copy "{CUTS_DIR}/cut{N}_temp.mp4"`
+        *   `ffmpeg -y -i "{DOWNLOAD_DIR}/{video_file}" -ss {start_time} -to {end_time} -vf "fade=t=in:st=0:d=2" -c:a copy "{CUTS_DIR}/cut{N}_temp.mp4"`
     *   **Step 2.2: Apply fade-out to the temporary file and create the final cut.**
         *   `ffmpeg -y -i "{CUTS_DIR}/cut{N}_temp.mp4" -vf "fade=t=out:st={duration}-2:d=2" -c:a copy "{CUTS_DIR}/cut{N}.mp4"`
     *   **Step 2.3: Delete the temporary file.**
         *   `rm "{CUTS_DIR}/cut{N}_temp.mp4"`
-    *   Where `{video_file}` is the name of the source video file in `{CUTS_DIR}` (e.g., `.mp4`, `.mkv`), `{N}` is the cut number (1-5), and `{duration}` is the calculated duration in seconds.
+    *   Where `{video_file}` is the name of the source video file in `{DOWNLOAD_DIR}` (e.g., `.mp4`, `.mkv`), `{N}` is the cut number (1-5), and `{duration}` is the calculated duration in seconds.
 
 ### **Step 6: Thumbnail Generation and Resizing**
 
