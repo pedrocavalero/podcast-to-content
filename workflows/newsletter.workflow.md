@@ -53,31 +53,33 @@ This document outlines the step-by-step process for converting a YouTube video i
 1.  **Parse the series plan** from `{NEWSLETTER_DIR}/summary.md`.
 2.  **For each of the 3 newsletters (Part N), perform the following:**
     a. **Generate Newsletter Content:** 
-       Create an engaging, friendly newsletter email based on the `Series Plan`, `Specific Focus`, and full transcript.
+       Create an engaging, insightful, and deep technical newsletter email based on the `Series Plan`, `Specific Focus`, and full transcript.
 
        **Instructions:**
 
+       - **Language:** English (Must be written in English, regardless of the transcript language).
        - **Context:** This is email #{N} of a 3-part series based on the podcast. 
-       - **Tone:** Friendly, First-Person ("I"). You are Pedro Cavalero, a senior developer talking to your fellow subscribers. Authentic, "Developer-to-Developer". No marketing fluff.
-       - **Audience:** Developers interested in Software Development, AI, Programming, Architecture, and Career.
+       - **Tone:** Expert, Insightful, First-Person ("I"). You are Pedro Cavalero, a senior developer talking to your peers (Senior Devs, Tech Leads, Architects). Authentic, "Senior-to-Senior". No corporate or marketing fluff.
+       - **Audience:** Senior Developers and Technical Leaders interested in Software Architecture, AI Engineering, and Career Strategy. Assume they know the basics; focus on nuance and depth.
        - **Structure:**
          - **Subject Line:** *Crucial Formatting*: must be the **first line** of the file, formatted as a **Markdown H1 Header** (e.g. `# Subject: {Topic}`). Do NOT use the prefix "Subject Line:".
          - **Preheader Text:** Must be the **second line**, formatted as a **Blockquote** (e.g. `> Preheader...`).
-         - **Opening (The Hook):** Start with a relatable problem or insight specific to *this* email's focus. Connect to the podcast.
+         - **Opening (The Hook):** Start with a provocative technical question, a common misconception, or a deep insight specific to *this* email's focus. Connect immediately to the podcast conversation.
          - **Body:** 
-           - Discuss the *specific focus* of this email in depth. **Do not repeat general summaries of the whole episode.**
-           - **Episode References:** Explicitly reference what was said in the episode (e.g., "As we discussed...", "I mentioned in the show...") to make the ideas concrete and easy to understand.
-           - **Value First:** Focus on *insights* and *solutions*.
-           - **Scannability (Strict):** 
-             - Use **bold text** to highlight key ideas. 
-             - **Constraint:** Paragraphs must be **maximum 2 sentences long**.
-             - Use bullet points for lists.
-         - **Key Takeaways:** 3 distinct, actionable bullet points specific to this angle.
+           - **Deep Dive:** Discuss the *specific focus* in technical depth. Explain the *architectural implications*, *trade-offs*, or *strategic reasoning* discussed in the episode.
+           - **Avoid Surface Level:** Do not just list facts. Explain *why* it matters. If discussing tools, discuss how they fit into a workflow or architecture.
+           - **Episode References:** Explicitly reference specific arguments or stories from the episode (e.g., "Fabio argued that...", "We debated whether...") to ground the insights.
+           - **Scannability:** 
+             - Use **bold text** to highlight critical technical concepts or punchy insights. 
+             - **Constraint:** Paragraphs should be concise (2-4 sentences) but **information-dense**. Avoid fluffy, empty sentences.
+             - Use bullet points for complex lists or trade-offs.
+         - **Key Takeaways:** 3 distinct, high-level, actionable takeaways. These should be things a senior dev can apply or think about immediately.
          - **Call to Action (CTA):** 
-            - Primary: "Listen to the full episode here: {youtube_url}"
-            - Secondary (Engagement): "What's your take? Hit reply and let me know."
-         - **Sign-off:** "Cheers," or "Happy coding," followed by "Pedro Cavalero".
-         - **P.S.:** Add a short "P.S." related to the series (e.g. "Stay tuned for Part {N+1} where we discuss..." if not the last one).
+            - Primary: "Listen to the full deep dive here: {youtube_url}"
+            - Secondary (Engagement): "How are you handling this in your architecture? Hit reply."
+            - Note: DO NOT call this section "Call to Action".
+         - **Sign-off:** "Cheers," followed by "Pedro Cavalero".
+         - **P.S.:** Add a short "P.S." teasing the next part's specific technical focus (e.g. "Stay tuned for Part {N+1} where we dissect...").
        - **Category:** The content should fit into "AI" or "Carreiras" (Careers).
 
        **Inputs:**

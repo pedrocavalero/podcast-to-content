@@ -38,6 +38,26 @@ def get_id_by_slug(term_type, name):
                 return item['id']
     return None
 
+def get_post_id_by_title(title):
+    """
+    Get the ID of a post by its title.
+    """
+    if not all([WP_URL, WP_USER, WP_PASSWORD]):
+        return None
+
+    response = requests.get(
+        f"{WP_URL}/wp-json/wp/v2/posts",
+        params={"search": title, "per_page": 1}, # Limit to 1 result as we expect unique titles
+        auth=(WP_USER, WP_PASSWORD)
+    )
+
+    if response.status_code == 200:
+        results = response.json()
+        for item in results:
+            if item['title']['rendered'].lower() == title.lower(): # Exact title match
+                return item['id']
+    return None
+
 def create_tag(name):
     """Creates a new tag."""
     if not all([WP_URL, WP_USER, WP_PASSWORD]):
@@ -146,16 +166,33 @@ def upload_to_wordpress(title, content_markdown, image_path=None, categories=Non
     if image_id:
         post_data["featured_media"] = image_id
 
-    response = requests.post(
-        f"{WP_URL}/wp-json/wp/v2/posts",
-        json=post_data,
-        auth=(WP_USER, WP_PASSWORD)
-    )
+    # Check if a post with this title already exists
+    existing_post_id = get_post_id_by_title(title)
 
-    if response.status_code == 201:
-        print(f"Successfully published/scheduled blog post: {title}")
+    if existing_post_id:
+        # Update existing post
+        response = requests.post( # WordPress API uses POST for updates with _method=PUT
+            f"{WP_URL}/wp-json/wp/v2/posts/{existing_post_id}",
+            json=post_data,
+            params={"_method": "PUT"}, # Explicitly tell WP to treat this as a PUT
+            auth=(WP_USER, WP_PASSWORD)
+        )
+        if response.status_code == 200: # 200 OK for successful update
+            print(f"Successfully updated blog post: {title} (ID: {existing_post_id})")
+        else:
+            print(f"Error updating blog post (ID: {existing_post_id}): {response.text}")
     else:
-        print(f"Error publishing blog post: {response.text}")
+        # Create new post
+        response = requests.post(
+            f"{WP_URL}/wp-json/wp/v2/posts",
+            json=post_data,
+            auth=(WP_USER, WP_PASSWORD)
+        )
+
+        if response.status_code == 201:
+            print(f"Successfully published/scheduled blog post: {title}")
+        else:
+            print(f"Error publishing blog post: {response.text}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Upload a blog post to WordPress.")
