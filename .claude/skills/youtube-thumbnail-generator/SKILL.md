@@ -43,7 +43,7 @@ When a user requests a thumbnail, analyze the video title to determine:
 
 2. **Execute the generation command**:
    ```bash
-   source .venv/bin/activate && python .claude/skills/youtube-thumbnail-generator/scripts/generate_image_nano_banana.py \
+   uv run python .claude/skills/youtube-thumbnail-generator/scripts/generate_image_nano_banana.py \
      "{prompt}" \
      "{output_dir}/thumbnail_raw.png" \
      --aspect_ratio "16:9" \
@@ -52,7 +52,7 @@ When a user requests a thumbnail, analyze the video title to determine:
 
 3. **Resize to YouTube dimensions**:
    ```bash
-   source .venv/bin/activate && python .claude/skills/youtube-thumbnail-generator/scripts/resize_image.py \
+   uv run python .claude/skills/youtube-thumbnail-generator/scripts/resize_image.py \
      "{output_dir}/thumbnail_raw.png" \
      "{output_dir}/thumbnail_1280x720.png" \
      --width 1280 \
@@ -107,10 +107,10 @@ Inform the user that:
 
 ## Requirements
 
-- Python 3.x with virtual environment at `.venv`
+- Python 3.9+ with uv installed
 - Google API key configured in `.env` file (GOOGLE_API_KEY)
 - Reference image at `workflows/Foto-3x4.jpg` (or custom path)
-- Required Python packages: google-genai, Pillow, python-dotenv
+- Dependencies installed via `uv sync`
 
 ## Error Handling
 

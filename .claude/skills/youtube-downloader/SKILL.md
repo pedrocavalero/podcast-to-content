@@ -53,7 +53,7 @@ If both exist and user hasn't requested re-download, skip to completion.
 
 **Full Download (Video + Subtitles)**:
 ```bash
-source .venv/bin/activate && yt-dlp \
+uv run yt-dlp \
   -P {DOWNLOAD_DIR} \
   --write-auto-subs \
   --sub-format srt \
@@ -62,7 +62,7 @@ source .venv/bin/activate && yt-dlp \
 
 **Subtitles Only** (faster, for transcription workflows):
 ```bash
-source .venv/bin/activate && yt-dlp \
+uv run yt-dlp \
   -P {DOWNLOAD_DIR} \
   --write-auto-sub \
   --sub-lang en \
@@ -74,7 +74,7 @@ source .venv/bin/activate && yt-dlp \
 
 **Video Only**:
 ```bash
-source .venv/bin/activate && yt-dlp \
+uv run yt-dlp \
   -P {DOWNLOAD_DIR} \
   --no-write-subs \
   "{YOUTUBE_URL}"
@@ -121,7 +121,7 @@ If download fails:
 2. Check if files exist
 3. If not, run:
 ```bash
-source .venv/bin/activate && yt-dlp \
+uv run yt-dlp \
   -P 25-11-16-SDeHHMvq9NE/download \
   --write-auto-subs \
   --sub-format srt \
@@ -134,7 +134,7 @@ source .venv/bin/activate && yt-dlp \
 
 **Action**:
 ```bash
-source .venv/bin/activate && yt-dlp \
+uv run yt-dlp \
   -P 25-12-23-ABC123/download \
   --write-auto-sub \
   --sub-lang en \
@@ -149,7 +149,7 @@ source .venv/bin/activate && yt-dlp \
 
 **Action**:
 ```bash
-source .venv/bin/activate && yt-dlp \
+uv run yt-dlp \
   -P {DOWNLOAD_DIR} \
   --write-auto-sub \
   --sub-lang en \
@@ -172,10 +172,9 @@ For each URL:
 
 ## Requirements
 
-- **yt-dlp**: Installed and accessible in PATH
-  - Install: `pip install yt-dlp` (usually in `.venv`)
-  - Or: `brew install yt-dlp` (macOS)
-  - Or: `apt install yt-dlp` (Linux)
+- **yt-dlp**: Installed via uv dependencies
+  - Automatically installed with `uv sync`
+  - Available via `uv run yt-dlp`
 
 - **Browser** (for subtitles-only mode): Chrome, Firefox, or Safari
 - **Network**: Active internet connection

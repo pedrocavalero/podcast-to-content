@@ -60,28 +60,28 @@ Get the video ID from:
 
 **Schedule Only**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
   --video_id {VIDEO_ID} \
   --schedule "{ISO_8601_DATETIME}"
 ```
 
 **Playlist Only**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
   --video_id {VIDEO_ID} \
   --playlists "{PLAYLIST_1}" "{PLAYLIST_2}"
 ```
 
 **Thumbnail Only**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_thumbnail.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_thumbnail.py \
   --video_id {VIDEO_ID} \
   --thumbnail "{THUMBNAIL_PATH}"
 ```
 
 **Schedule and Playlist**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
   --video_id {VIDEO_ID} \
   --schedule "{ISO_8601_DATETIME}" \
   --playlists "{PLAYLIST_1}" "{PLAYLIST_2}"
@@ -116,7 +116,7 @@ If this is the first run or credentials are expired:
 
 **Action**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
   --video_id ABC123 \
   --schedule "2025-12-25T10:00:00Z"
 ```
@@ -126,7 +126,7 @@ source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts
 
 **Action**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
   --video_id XYZ789 \
   --playlists "Tutorial Series" "Best Of"
 ```
@@ -138,7 +138,7 @@ source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts
 1. Calculate next Wednesday at 2 PM EST in ISO 8601 format
 2. Run:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_video.py \
   --video_id DEF456 \
   --schedule "2025-01-15T14:00:00-05:00" \
   --playlists "Weekly Updates"
@@ -149,7 +149,7 @@ source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts
 
 **Action**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts/update_youtube_thumbnail.py \
+uv run python .claude/skills/youtube-video-updater/scripts/update_youtube_thumbnail.py \
   --video_id HqlAGSPi3jk \
   --thumbnail "thumbnails/thumbnail_1280x720.png"
 ```
@@ -166,11 +166,11 @@ source .venv/bin/activate && python .claude/skills/youtube-video-updater/scripts
 
 ## Requirements
 
-- Python 3.x with virtual environment at `.venv`
+- Python 3.9+ with uv installed
 - Google Cloud Project with YouTube Data API v3 enabled
 - OAuth 2.0 Client ID credentials (Desktop app type)
 - `client_secret.json` in project root directory
-- Required Python packages: google-auth-oauthlib, google-api-python-client
+- Dependencies installed via `uv sync`
 
 ## Error Handling
 

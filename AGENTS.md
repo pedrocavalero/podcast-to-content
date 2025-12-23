@@ -27,19 +27,22 @@ When a user wants to run an existing workflow, the agent must perform the follow
 
 Before attempting to execute any part of a workflow, the agent must verify the user's environment:
 
-1.  **Check for Virtual Environment:**
-    -   Verify the existence of a `.venv` directory in the project root.
-    -   If it doesn't exist, guide the user to create one:
+1.  **Check for uv Installation:**
+    -   Verify that `uv` is installed on the system.
+    -   If not, guide the user to install it:
         ```bash
-        python3 -m venv .venv
-        source .venv/bin/activate
+        # On macOS/Linux
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+
+        # On Windows
+        powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
         ```
 
 2.  **Check for Installed Libraries:**
-    -   Verify that the packages listed in `requirements.txt` are installed within the virtual environment.
+    -   Verify that the dependencies are installed (check for `.venv` directory or `uv.lock` file).
     -   If not, instruct the user to install them:
         ```bash
-        pip install -r requirements.txt
+        uv sync
         ```
 
 3.  **Check for `ffmpeg` (if required):**
@@ -65,8 +68,8 @@ When a user wants to create a new workflow or improve an existing one, the agent
 #### b. Scripting (`scripts/*.py`)
 
 -   **Python Scripts:** Assist the user in writing Python scripts in the `scripts/` directory that will serve as the tools for the workflow.
--   **Virtual Environment:** All code should be written with the assumption that it will be executed within the project's virtual environment.
--   **Dependency Management:** Use `pip` and `requirements.txt` to manage all Python dependencies.
+-   **Virtual Environment:** All code should be written with the assumption that it will be executed using `uv run` or within uv's managed virtual environment.
+-   **Dependency Management:** Use `uv` and `pyproject.toml` to manage all Python dependencies. Add new dependencies with `uv add <package>`.
 -   **Best Practices:** Encourage the use of modular functions, clear variable names, and error handling.
 
 #### c. Command Configuration

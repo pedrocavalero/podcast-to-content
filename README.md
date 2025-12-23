@@ -181,15 +181,18 @@ The `workflows/youtube-shorts.workflow.md` file describes the manual steps of th
     sudo apt install ffmpeg
     ```
 
-3.  **Create a virtual environment and activate it:**
+3.  **Install uv (if not already installed):**
     ```bash
-    python3 -m venv .venv
-    source .venv/bin/activate
+    # On macOS/Linux
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # On Windows
+    powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
     ```
 
 4.  **Install the required Python packages:**
     ```bash
-    pip install -r requirements.txt
+    uv sync
     ```
 
 5.  **Create a `.env` file by copying the example file:**
@@ -198,6 +201,23 @@ The `workflows/youtube-shorts.workflow.md` file describes the manual steps of th
     ```
 
 6.  **Edit the `.env` file and add your API keys and WordPress credentials.**
+
+### Running Python Scripts
+
+With uv, you have two options to run Python scripts:
+
+1. **Using `uv run` (recommended):**
+   ```bash
+   uv run python scripts/transcribe.py <video_id>
+   ```
+
+2. **Activating the virtual environment:**
+   ```bash
+   source .venv/bin/activate
+   python scripts/transcribe.py <video_id>
+   ```
+
+Both methods work identically. The `uv run` method automatically ensures you're using the correct Python version and dependencies.
 
 ## Configuration
 

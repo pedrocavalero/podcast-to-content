@@ -49,7 +49,7 @@ Descriptions can be provided in two ways:
 
 **Basic Upload** (without thumbnail):
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "{video_path}" \
   --title "{title}" \
   --description "{description}"
@@ -57,7 +57,7 @@ source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/uplo
 
 **Upload with Thumbnail**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "{video_path}" \
   --title "{title}" \
   --description "{description}" \
@@ -66,7 +66,7 @@ source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/uplo
 
 **Upload with Description File**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "{video_path}" \
   --title "{title}" \
   --description_file "{description_file_path}" \
@@ -137,7 +137,7 @@ Save the video ID for subsequent operations:
 
 **Action**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "cuts-SDeHHMvq9NE/cut1.mp4" \
   --title "From Code to Research: The Unexpected Career Path" \
   --description "$(cat <<'EOF'
@@ -171,14 +171,14 @@ For each cut (1-5):
 
 ```bash
 # Cut 1
-python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "cuts/cut1.mp4" \
   --title "{title_1}" \
   --description "{description_1}" \
   --thumbnail "cuts/cut1_thumbnail_1280x720.png"
 
 # Cut 2
-python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "cuts/cut2.mp4" \
   --title "{title_2}" \
   --description "{description_2}" \
@@ -193,7 +193,7 @@ python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
 1. Create `description.txt` with formatted content
 2. Upload using `--description_file`:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "my-video.mp4" \
   --title "My Awesome Video" \
   --description_file "description.txt" \
@@ -205,7 +205,7 @@ source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/uplo
 
 **Action**:
 ```bash
-source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
+uv run python .claude/skills/youtube-uploader/scripts/upload_youtube_video.py \
   --file "video.mp4" \
   --title "My Video Title" \
   --description "A brief description of my video"
@@ -213,11 +213,11 @@ source .venv/bin/activate && python .claude/skills/youtube-uploader/scripts/uplo
 
 ## Requirements
 
-- Python 3.x with virtual environment at `.venv`
+- Python 3.9+ with uv installed
 - Google Cloud Project with YouTube Data API v3 enabled
 - OAuth 2.0 Client ID credentials (Desktop app type)
 - `client_secret.json` in project root directory
-- Required Python packages: google-auth-oauthlib, google-api-python-client
+- Dependencies installed via `uv sync`
 - Valid video file in supported format
 - Internet connection with sufficient upload bandwidth
 
