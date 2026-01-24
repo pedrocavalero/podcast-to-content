@@ -42,6 +42,8 @@ When a user requests a thumbnail, analyze the video title to determine:
    ```
 
 2. **Execute the generation command**:
+   - output_dir = "thumbnails/{title or video_id what is more convenient for folder name}"
+   - If user suggests a different output_dir, use it instead
    ```bash
    uv run python .claude/skills/youtube-thumbnail-generator/scripts/generate_image_nano_banana.py \
      "{prompt}" \
