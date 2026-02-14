@@ -33,7 +33,7 @@ def generate_short(output_dir, input_video_path, srt_path, short_number, start_t
     run_command(f'python3 scripts/adjust_srt.py "{srt_path}" {start_time} "{temp_srt_file}"')
 
     # Convert SRT to ASS
-    run_command(f'ffmpeg -i "{temp_srt_file}" "{temp_ass_file}"')
+    run_command(f'ffmpeg -y -i "{temp_srt_file}" "{temp_ass_file}"')
 
     # Modify ASS file
     with open(temp_ass_file, "r+") as f:
@@ -52,9 +52,9 @@ def generate_short(output_dir, input_video_path, srt_path, short_number, start_t
     run_command(f'ffmpeg -y -i "{temp_subtitled_file}" -filter_complex "[0:v]setpts=PTS/2.0[v];[0:a]atempo=2.0[a]" -map "[v]" -map "[a]" "{temp_spedup_file}"')
     command = [
         "ffmpeg", "-y", "-i", temp_spedup_file,
-        "-filter_complex", f"'drawtext=textfile={temp_title_file}:fontfile=/System/Library/Fonts/Supplemental/Arial Bold.ttf:fontsize=70:fontcolor=yellow:x=(w-text_w)/2:y=100'",
+        "-filter_complex", f'"drawtext=textfile={temp_title_file}:fontfile=\'/System/Library/Fonts/Supplemental/Arial Bold.ttf\':fontsize=70:fontcolor=yellow:x=(w-text_w)/2:y=100"',
         "-c:a", "copy",
-        output_file
+        f'"{output_file}"'
     ]
     run_command(" ".join(command))
 
