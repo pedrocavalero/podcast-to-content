@@ -51,24 +51,26 @@ This document outlines the step-by-step process for converting a YouTube video i
 
        **Instructions:**
 
-       - **Title:** Create a catchy and descriptive title (6-10 words). The title should be in title case and include keywords from the topic.
-       - **Tone:** Use an informal, friendly, and professional tone. Imagine you're a senior developer mentoring a junior colleague. Use contractions (e.g., "you're", "it's") to make it more conversational.
-       - **Audience:** The target audience is developers for whom English is a second language. Use clear and simple language. Avoid jargon where possible, or explain it clearly.
-       - **Structure & Formatting:**
-         - Start with a friendly and engaging greeting (e.g., "Hey fellow devs!", "Hi team,").
-         - Write a short introduction (2-3 sentences) to grab the reader's attention and explain the post's value.
-         - Use Markdown for formatting. Use `##` for subheadings to break up the content.
-         - Use bullet points or numbered lists to present complex information or steps.
-         - Keep paragraphs short (2-4 sentences).
-       - **Content:**
-         - The post must be based on the provided `topic_title` and `topic_summary`.
-         - Use the `full_transcript` to extract direct quotes that support your points.
-         - **Quote Handling:** When you use a quote, you must:
-           1.  Identify the speaker by name.
-           2.  Clean up the raw transcription: remove filler words (like "um", "ah"), false starts, and repeated words. Correct grammatical errors. Ensure the final quote is fluent and readable but preserves the original meaning and informal tone. *Do not summarize the quote.*
-         - Provide actionable advice and practical insights for developers.
-         - Ask rhetorical questions to keep the reader engaged.
-       - **Conclusion:**
+        - **Title:** Create a catchy and descriptive title (6-10 words). The title should be in title case and include keywords from the topic.
+        - **Tone:** Use an informal, friendly, and professional tone. Imagine you're a senior developer mentoring a junior colleague. Use contractions (e.g., "you're", "it's") to make it more conversational.
+        - **Audience:** The target audience is developers for whom English is a second language. Use clear and simple language. Avoid jargon where possible, or explain it clearly.
+        - **Structure & Formatting:**
+          - Start with a friendly and engaging greeting (e.g., "Hey fellow devs!", "Hi team,").
+          - Write a short introduction (2-3 sentences) to grab the reader's attention and explain the post's value.
+          - **Word Count Target:** Aim for **800 to 1,000+ words** of information-dense, detailed content per post to ensure search engine topical authority.
+          - Use Markdown for formatting. Use `##` (H2) and `###` (H3) subheadings to break up the content logically. Do NOT use H1 headers in the post body.
+          - Use bullet points or numbered lists to present complex information or steps.
+          - Keep paragraphs short (2-4 sentences).
+        - **Content:**
+          - The post must be based on the provided `topic_title` and `topic_summary`.
+          - Use the `full_transcript` to extract direct quotes that support your points.
+          - **Quote Handling:** When you use a quote, you must:
+            1.  Identify the speaker by name.
+            2.  Clean up the raw transcription: remove filler words (like "um", "ah"), false starts, and repeated words. Correct grammatical errors. Ensure the final quote is fluent and readable but preserves the original meaning and informal tone. *Do not summarize the quote.*
+          - Provide actionable advice and practical insights for developers.
+          - Ask rhetorical questions to keep the reader engaged.
+          - **Video Reference:** Include a call to action at the end linking to the source video: "Watch the [full video here](https://www.youtube.com/watch?v={VIDEO_ID})".
+        - **Conclusion:**
          - Write a concluding paragraph that summarizes the key takeaways.
          - End with a specific and engaging call to action or a thought-provoking question. Examples: "What are your thoughts on this? Share in the comments below!", "Try this out in your next project and let me know how it goes!".
        - **Signature:**
