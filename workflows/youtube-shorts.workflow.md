@@ -44,6 +44,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Start time (`start_time`)
     *   End time (`end_time`)
     *   A catchy and descriptive title (`title`) - *Consider adding #Shorts or #YouTubeShorts here.*
+    *   A Portuguese translation of the catchy title (`translated_title`) - *Keep the title engaging and add #Shorts in Portuguese if relevant.*
     *   A list of 10-15 relevant keywords/tags (`tags`) separated by commas (e.g., `programming, tech, java, learn java, remote work`).
     *   A concise and engaging `description` of the cut's content. The description must:
         *   Be brief and to the point, capturing attention quickly.
@@ -51,6 +52,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
         *   Mention the original video's name and provide the `YOUTUBE_URL`.
         *   Include a clear and concise call-to-action with a link to the user's website (`USER_WEBSITE`).
         *   Avoid timestamps, as they are less critical for short-form content.
+    *   A Portuguese translation of the concise description (`translated_description`) - *Follow the same call-to-action and formatting guidelines.*
 
 ### **Step 4: Shorts Metadata Generation**
 
@@ -65,9 +67,14 @@ This document outlines the step-by-step process for downloading a YouTube video 
     End Time: {end_time}
     Name of the short file: short{number}.mp4
 
-    **Description:**
-
+    **Description (English):**
     {description}
+
+    **Translated Title (Portuguese):**
+    {translated_title}
+
+    **Translated Description (Portuguese):**
+    {translated_description}
 
     **Tags:**
     {tags}
@@ -85,7 +92,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 6: Video Upload**
 
 1.  **For each cut, upload the video to YouTube:**
-    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_short.py --file "{SHORTS_DIR}/short{N}.mp4" --title "{title} #Shorts" --description "{description}" --tags "{tags}"`
+    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_short.py --file "{SHORTS_DIR}/short{N}.mp4" --title "{title} #Shorts" --description "{description}" --tags "{tags}" --default_language "en" --translation_language "pt" --translated_title "{translated_title} #Shorts" --translated_description "{translated_description}"`
     *   Note: The title now includes `#Shorts` to help YouTube categorize it.
 
 ### **Step 7: Video Scheduling and Playlist Assignment**

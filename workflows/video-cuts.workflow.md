@@ -43,12 +43,14 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Start time (`start_time`)
     *   End time (`end_time`)
     *   A catchy and descriptive title (`title`)
+    *   A Portuguese translation of the catchy title (`translated_title`).
     *   A list of 10-15 relevant keywords/tags (`tags`) separated by commas (e.g., `programming, tech, java, learn java, remote work`).
     *   A detailed and engaging `description` of the cut's content. The description must:
         *   Be written in a compelling and engaging tone, using emojis to highlight key points and create visual interest.
         *   Integrate timestamps (e.g., `00:45`) naturally within the descriptive text, highlighting at least 3 key moments or topics discussed at those points. Use bulleted lists of timestamps but make the description of each line visually atractive with emojis. Make sure the timestamps are based on the cut video time, not from the original one.
         *   Clearly mention the original video's name and provide the `YOUTUBE_URL`.
         *   Include a clear and concise call-to-action with a link to the user's website (`USER_WEBSITE`).
+    *   A Portuguese translation of the detailed and engaging description (`translated_description`) - *Follow the exact same formatting, emojis, timestamps, and call-to-action guidelines.*
 
 ### **Step 4: Cuts Metadata Generation**
 
@@ -63,9 +65,14 @@ This document outlines the step-by-step process for downloading a YouTube video 
     End Time: {end_time}
     Name of the cut file: cut{number}.mp4
 
-    **Description:**
-
+    **Description (English):**
     {description}
+
+    **Translated Title (Portuguese):**
+    {translated_title}
+
+    **Translated Description (Portuguese):**
+    {translated_description}
 
     **Tags:**
     {tags}
@@ -101,7 +108,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 7: Video Upload**
 
 1.  **For each cut, upload the video to YouTube with its generated thumbnail:**
-    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_video.py --file "{CUTS_DIR}/cut{N}.mp4" --title "{title}" --description "{description}" --thumbnail "{CUTS_DIR}/cut{N}_thumbnail_1280x720.png" --tags "{tags}"`
+    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_video.py --file "{CUTS_DIR}/cut{N}.mp4" --title "{title}" --description "{description}" --thumbnail "{CUTS_DIR}/cut{N}_thumbnail_1280x720.png" --tags "{tags}" --default_language "en" --translation_language "pt" --translated_title "{translated_title}" --translated_description "{translated_description}"`
 
 ### **Step 8: Video Scheduling and Playlist Assignment**
 

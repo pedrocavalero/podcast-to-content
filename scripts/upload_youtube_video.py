@@ -11,7 +11,7 @@ CLIENT_SECRETS_FILE = 'client_secret.json'
 
 # This OAuth 2.0 access scope allows for full read/write access to the
 # authenticated user's YouTube account.
-SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
+SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
@@ -40,7 +40,7 @@ def get_authenticated_service():
     
     return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
-def upload_video(youtube, video_path, title, description, tags=None, thumbnail_path=None):
+def upload_video(youtube, video_path, title, description, tags=None, default_language=None, translated_title=None, translated_description=None, translation_language=None, thumbnail_path=None):
     body = {
         'snippet': {
             'title': title,
@@ -54,6 +54,16 @@ def upload_video(youtube, video_path, title, description, tags=None, thumbnail_p
 
     if tags:
         body['snippet']['tags'] = tags
+
+    if default_language and (translated_title or translated_description):
+        body['snippet']['defaultLanguage'] = default_language
+        lang = translation_language or 'pt'
+        body['localizations'] = {
+            lang: {
+                'title': translated_title or title,
+                'description': translated_description or description
+            }
+        }
 
     # Call the API's videos.insert method to upload the video.
     insert_request = youtube.videos().insert(
@@ -96,6 +106,11 @@ if __name__ == '__main__':
     parser.add_argument('--description_file', help='Path to a file containing the description of the video.')
     parser.add_argument('--thumbnail', help='Path to the thumbnail image file (optional).')
     parser.add_argument('--tags', help='Comma-separated list of tags for the video (optional).')
+    parser.add_argument('--default_language', default='en', help='Default language of the snippet metadata (default: en).')
+    parser.add_argument('--translated_title', help='Translated title for the video (optional).')
+    parser.add_argument('--translated_description', help='Translated description for the video (optional).')
+    parser.add_argument('--translated_description_file', help='Path to a file containing the translated description (optional).')
+    parser.add_argument('--translation_language', default='pt', help='Language code for the translation (default: pt).')
 
     args = parser.parse_args()
 
@@ -107,11 +122,28 @@ if __name__ == '__main__':
     else:
         raise ValueError("Either --description or --description_file must be provided.")
 
+    if args.translated_description_file:
+        with open(args.translated_description_file, 'r') as f:
+            translated_desc = f.read()
+    else:
+        translated_desc = args.translated_description
+
     tags_list = [t.strip() for t in args.tags.split(',')] if args.tags else None
 
     try:
         youtube = get_authenticated_service()
-        upload_video(youtube, args.file, args.title, video_description, tags=tags_list, thumbnail_path=args.thumbnail)
+        upload_video(
+            youtube, 
+            args.file, 
+            args.title, 
+            video_description, 
+            tags=tags_list, 
+            default_language=args.default_language,
+            translated_title=args.translated_title,
+            translated_description=translated_desc,
+            translation_language=args.translation_language,
+            thumbnail_path=args.thumbnail
+        )
     except HttpError as e:
         print(f'An HTTP error {e.resp.status} occurred: {e.content.decode("utf-8")}')
     except Exception as e:
