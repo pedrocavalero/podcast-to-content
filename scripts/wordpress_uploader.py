@@ -90,15 +90,63 @@ def upload_to_wordpress(title, content_markdown, image_path=None, categories=Non
         print("Error: WordPress credentials (WP_URL, WP_USER, WP_PASSWORD) are not set in .env file or environment variables.")
         return
 
-    # Remove the first line (title) from the Markdown content if it matches the title argument
+    # Remove the first line (title/subject) if it matches the title, starts with Subject/H1, to avoid double H1
     content_lines = content_markdown.splitlines()
-    if content_lines and content_lines[0].strip().replace('#', '').strip() == title.strip():
-         content_body_markdown = "\n".join(content_lines[1:])
-    else:
-         content_body_markdown = content_markdown
+    while content_lines and not content_lines[0].strip():
+        content_lines.pop(0)
+
+    if content_lines:
+        first_line = content_lines[0].strip()
+        first_line_clean = first_line.replace('#', '').strip()
+        if (first_line_clean.lower() == title.strip().lower() or 
+            first_line.startswith('# Subject:') or 
+            first_line.startswith('Subject:') or
+            (first_line.startswith('#') and not first_line.startswith('##'))):
+            content_lines.pop(0)
+
+    while content_lines and not content_lines[0].strip():
+        content_lines.pop(0)
+
+    content_body_markdown = "\n".join(content_lines)
 
     # Convert Markdown content to HTML
     content_html = markdown.markdown(content_body_markdown)
+
+    # Auto-embed YouTube videos and make links clickable
+    import re
+    yt_regex = r"(https?://(?:www\.)?(?:youtube\.com/watch\?v=|youtu\.be/)([\w-]+)(?:&\S*)?)"
+    
+    # 1. Turn plain text YouTube URLs into clickable links
+    def make_clickable(match):
+        url = match.group(1)
+        start_idx = match.start()
+        prefix = content_html[max(0, start_idx-15):start_idx]
+        if 'href="' in prefix or 'src="' in prefix:
+            return url
+        return f'<a href="{url}" target="_blank" rel="noopener noreferrer">{url}</a>'
+    
+    content_html = re.sub(yt_regex, make_clickable, content_html)
+
+    # 2. Append Gutenberg YouTube Embed Block for each unique video
+    matches = re.findall(yt_regex, content_body_markdown)
+    if matches:
+        embeds = []
+        seen_ids = set()
+        for url, video_id in matches:
+            if video_id not in seen_ids:
+                seen_ids.add(video_id)
+                embed_block = (
+                    f'\n\n<!-- wp:embed {{"url":"{url}","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"}} -->\n'
+                    f'<figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">\n'
+                    f'<div class="wp-block-embed__wrapper">\n'
+                    f'<iframe width="560" height="315" src="https://www.youtube.com/embed/{video_id}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>\n'
+                    f'</div>\n'
+                    f'</figure>\n'
+                    f'<!-- /wp:embed -->'
+                )
+                embeds.append(embed_block)
+        if embeds:
+            content_html += "\n" + "\n".join(embeds)
 
     image_id = None
     if image_path and os.path.exists(image_path):

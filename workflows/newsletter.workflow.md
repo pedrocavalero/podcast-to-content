@@ -66,7 +66,8 @@ This document outlines the step-by-step process for converting a YouTube video i
          - **Preheader Text:** Must be the **second line**, formatted as a **Blockquote** (e.g. `> Preheader...`).
          - **Opening (The Hook):** Start with a provocative technical question, a common misconception, or a deep insight specific to *this* email's focus. Connect immediately to the podcast conversation.
          - **Body:** 
-           - **Deep Dive:** Discuss the *specific focus* in technical depth. Explain the *architectural implications*, *trade-offs*, or *strategic reasoning* discussed in the episode.
+           - **Deep Dive (SEO Target: 600-800+ words):** Discuss the *specific focus* in technical depth. Explain the *architectural implications*, *trade-offs*, or *strategic reasoning* discussed in the episode. Keep content highly valuable, actionable, and concrete.
+           - **Structure with Headings:** Use Markdown `##` (H2) and `###` (H3) subheadings to break up the deep dive sections logically. Do NOT use H1 headers in the body.
            - **Avoid Surface Level:** Do not just list facts. Explain *why* it matters. If discussing tools, discuss how they fit into a workflow or architecture.
            - **Episode References:** Explicitly reference specific arguments or stories from the episode (e.g., "Fabio argued that...", "We debated whether...") to ground the insights.
            - **Scannability:** 
@@ -75,8 +76,8 @@ This document outlines the step-by-step process for converting a YouTube video i
              - Use bullet points for complex lists or trade-offs.
          - **Key Takeaways:** 3 distinct, high-level, actionable takeaways. These should be things a senior dev can apply or think about immediately.
          - **Call to Action (CTA):** 
-            - Primary: "Listen to the full deep dive here: {youtube_url}"
-            - Secondary (Engagement): "How are you handling this in your architecture? Hit reply."
+            - Primary: "Listen to the [full deep dive here]({youtube_url})"
+            - Secondary (Engagement): "How are you handling this in your architecture? Leave a comment below!"
             - Note: DO NOT call this section "Call to Action".
          - **Sign-off:** "Cheers," followed by "Pedro Cavalero".
          - **P.S.:** Add a short "P.S." teasing the next part's specific technical focus (e.g. "Stay tuned for Part {N+1} where we dissect...").
