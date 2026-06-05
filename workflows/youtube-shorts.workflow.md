@@ -44,6 +44,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
     *   Start time (`start_time`)
     *   End time (`end_time`)
     *   A catchy and descriptive title (`title`) - *Consider adding #Shorts or #YouTubeShorts here.*
+    *   A list of 10-15 relevant keywords/tags (`tags`) separated by commas (e.g., `programming, tech, java, learn java, remote work`).
     *   A concise and engaging `description` of the cut's content. The description must:
         *   Be brief and to the point, capturing attention quickly.
         *   Include relevant keywords and 2-3 highly relevant hashtags (e.g., #Programming #Tech #Developers).
@@ -68,6 +69,9 @@ This document outlines the step-by-step process for downloading a YouTube video 
 
     {description}
 
+    **Tags:**
+    {tags}
+
     ---
     ```
 
@@ -81,7 +85,7 @@ This document outlines the step-by-step process for downloading a YouTube video 
 ### **Step 6: Video Upload**
 
 1.  **For each cut, upload the video to YouTube:**
-    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_short.py --file "{SHORTS_DIR}/short{N}.mp4" --title "{title} #Shorts" --description "{description}"`
+    *   Run the command: `source .venv/bin/activate && python scripts/upload_youtube_short.py --file "{SHORTS_DIR}/short{N}.mp4" --title "{title} #Shorts" --description "{description}" --tags "{tags}"`
     *   Note: The title now includes `#Shorts` to help YouTube categorize it.
 
 ### **Step 7: Video Scheduling and Playlist Assignment**

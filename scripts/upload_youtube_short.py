@@ -40,7 +40,7 @@ def get_authenticated_service():
 
     return build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
-def upload_video(youtube, video_path, title, description, thumbnail_path=None):
+def upload_video(youtube, video_path, title, description, tags=None, thumbnail_path=None):
     # For YouTube Shorts, the key factors are video duration (<= 60 seconds)
     # and aspect ratio (vertical, e.g., 9:16).
     # Adding #Shorts to the title or description can also help with categorization.
@@ -54,6 +54,9 @@ def upload_video(youtube, video_path, title, description, thumbnail_path=None):
             'privacyStatus': 'private' # 'public', 'private', or 'unlisted'
         }
     }
+
+    if tags:
+        body['snippet']['tags'] = tags
 
     # Call the API's videos.insert method to upload the video.
     insert_request = youtube.videos().insert(
@@ -95,6 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('--description', help='Description of the video.')
     parser.add_argument('--description_file', help='Path to a file containing the description of the video.')
     parser.add_argument('--thumbnail', help='Path to the thumbnail image file (optional).')
+    parser.add_argument('--tags', help='Comma-separated list of tags for the video (optional).')
 
     args = parser.parse_args()
 
@@ -106,9 +110,11 @@ if __name__ == '__main__':
     else:
         raise ValueError("Either --description or --description_file must be provided.")
 
+    tags_list = [t.strip() for t in args.tags.split(',')] if args.tags else None
+
     try:
         youtube = get_authenticated_service()
-        upload_video(youtube, args.file, args.title, video_description, args.thumbnail)
+        upload_video(youtube, args.file, args.title, video_description, tags=tags_list, thumbnail_path=args.thumbnail)
     except HttpError as e:
         print(f'An HTTP error {e.resp.status} occurred: {e.content.decode("utf-8")}')
     except Exception as e:
